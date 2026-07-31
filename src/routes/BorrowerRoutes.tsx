@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import BorrowerLayout from '@/modules/borrower/layouts/BorrowerLayout/BorrowerLayout';
+import { Routes, Route, Outlet } from 'react-router-dom';
+import { BorrowerLayout } from '@/modules/borrower/layouts/borrower-layout/BorrowerLayout';
 
 // Lazy load the pages
-const PhoneEntryPage = lazy(() => import('@/modules/borrower/auth/pages/PhoneEntryPage/PhoneEntryPage'));
+const PhoneEntryPage = lazy(() => import('@/modules/borrower/auth/pages/phone-entry/PhoneEntryPage').then(m => ({ default: m.PhoneEntryPage })));
 
 // A simple fallback until we build the real PageLoader
 const Loader = () => <div>Loading...</div>;
@@ -11,7 +11,7 @@ const Loader = () => <div>Loading...</div>;
 export default function BorrowerRoutes() {
   return (
     <Routes>
-      <Route element={<BorrowerLayout />}>
+      <Route element={<BorrowerLayout><Outlet /></BorrowerLayout>}>
         {/* PUBLIC ROUTE */}
         <Route 
           path="/" 
