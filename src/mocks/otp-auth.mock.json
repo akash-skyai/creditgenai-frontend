@@ -1,0 +1,6 @@
+{
+  "sendOtp": {
+    "success": true,
+    "message": "OTP sent successfully"
+  }
+}
