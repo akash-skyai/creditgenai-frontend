@@ -34,7 +34,7 @@ This document breaks down the global technology stack used in the CreditGenAI fr
 
 ## 3. UI, Styling, & Icons
 
-### **PrimeReact (`primereact`)**
+### **Material-UI (`@mui/material`)**
 - **What it does:** The core UI component library providing pre-built, accessible elements like inputs, dropdowns, and buttons.
 - **Where to find it:** Imported directly inside `components/` and `pages/`.
 
@@ -71,7 +71,7 @@ This document breaks down the global technology stack used in the CreditGenAI fr
 
 To understand the architecture, follow the data flow of a simple form submission:
 
-1. A user types their data into a UI form (**React Hook Form** + **PrimeReact**).
+1. A user types their data into a UI form (**React Hook Form** + **Material-UI**).
 2. The form validates the input automatically against a predefined schema (**Zod**).
 3. Upon a valid submission, the form triggers a custom React hook (**TanStack Query**).
 4. The hook calls a module-specific service function, which uses the global API client (**Axios**) to securely talk to the backend.

@@ -61,7 +61,7 @@ We use **Inter** (Google Fonts) exclusively.
   - **Content Area:** A centered form card (max-width `720px`).
 - **Form Elements:** Inputs should be full-width within their grid columns. Labels above inputs. Clean `#dbe3ec` borders turning `#1d4ed8` on focus.
 
-## 5. PrimeReact & Lucide Integration
+## 5. Material-UI (MUI) & Lucide Integration
 
-- **PrimeReact:** Used for structural components (e.g., dropdowns, sliders). Its default styles must be overridden in `globals.scss` using our CSS variables to ensure it matches the premium aesthetic.
+- **Material-UI:** Used for structural components (e.g., dropdowns, sliders). Its default styles must be overridden via standard overrides or SCSS modules using our CSS variables to ensure it matches the premium aesthetic.
 - **Lucide React:** The **only** icon library permitted. Use consistent stroke widths (usually `1.5` or `2`) and sizes. 

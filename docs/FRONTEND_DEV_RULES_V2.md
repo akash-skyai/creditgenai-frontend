@@ -19,7 +19,7 @@ Vite
 React Router          → routing
 React Hook Form + Zod → forms & validation
 TanStack Query        → server/API data
-PrimeReact            → UI component library (buttons, inputs, dropdowns, etc.)
+Material-UI           → UI component library (buttons, inputs, dropdowns, etc.)
 Lucide React          → Official icon library (lucide-react)
 SCSS Modules          → component layout and custom styling
 Vitest + RTL          → testing
@@ -91,7 +91,7 @@ modules/**/*.module.scss → styling that belongs to ONE component only
 
 Anything shared across the whole app (colors, spacing, font sizes, radius values) is a **CSS variable defined once in `globals.scss`**. A component's own `.module.scss` should only contain layout/spacing specific to that component — it should reference the global variables, never redefine its own color or spacing values.
 
-**PrimeReact overrides:** Since we use PrimeReact for core UI components, use CSS variables and global SCSS to override PrimeReact's default theme tokens to match our premium, custom design language. Avoid `!important` tags where possible.
+**Material-UI overrides:** Since we use Material-UI for core UI components, use CSS variables and global SCSS to override MUI's default theme tokens to match our premium, custom design language. Avoid `!important` tags where possible.
 
 ```scss
 // styles/globals.scss

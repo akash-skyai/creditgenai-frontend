@@ -1,8 +1,7 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+import { InputBase, Button } from '@mui/material';
 import { Lock } from 'lucide-react';
 import { phoneSchema, type PhoneFormValues } from '../../schemas/phone.schema';
 import styles from './PhoneForm.module.scss';
@@ -42,13 +41,12 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
             name="mobileNumber"
             control={control}
             render={({ field }) => (
-              <InputText
+              <InputBase
                 id="mobileNumber"
                 {...field}
                 className={`${styles.input} ${errors.mobileNumber ? styles.inputError : ''}`}
                 placeholder="98765 43210"
-                maxLength={10}
-                keyfilter="int"
+                inputProps={{ maxLength: 10, inputMode: 'numeric', pattern: '[0-9]*' }}
               />
             )}
           />
@@ -59,6 +57,8 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
 
         <Button
           type="submit"
+          variant="contained"
+          disableElevation
           className={styles.submitBtn}
           disabled={!isValid || isLoading}
         >

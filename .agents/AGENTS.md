@@ -21,7 +21,7 @@ If you have not read all three files, stop and read them before proceeding.
 
 - **What it is:** A loan origination platform. One frontend repo. Backend is a separate repo.
 - **Currently building:** The `borrower` module only — migrating from `borrower-page-old/` into the proper module structure under `src/modules/borrower/`. **Goal:** We are elevating the intern's old HTML/CSS into a highly responsive, production-grade, modern UI/UX (premium feel, vibrant but professional colors, micro-animations). Do not just blindly copy the old CSS; translate it to modern React component standards.
-- **Stack:** React + TypeScript (`.tsx`/`.ts` only) + Vite + PrimeReact + Lucide React + React Hook Form + Zod + TanStack Query + SCSS Modules + Vitest/RTL.
+- **Stack:** React + TypeScript (`.tsx`/`.ts` only) + Vite + @mui/material (Material-UI) + Lucide React + React Hook Form + Zod + TanStack Query + SCSS Modules + Vitest/RTL.
 - **Mock data:** All services use a `VITE_USE_MOCK` flag in `.env`. Real API is not ready yet.
 - **Other modules:** Other portals will exist in the future. Do not scaffold, reference, or think about them. Focus only on `borrower`.
 
@@ -49,7 +49,7 @@ If you have not read all three files, stop and read them before proceeding.
 
 10. **When in doubt about a decision, check `PROJECT_STRUCTURE.md` Section 2 (Confirmed Decisions). If it is not there, ask the user before guessing.**
 
-11. **Do not hallucinate component APIs.** If you need to use a PrimeReact component (or any third-party library) and you are not 100% sure of the exact props/API for the current version, explicitly tell the user: *"Please search the web for the [Component Name] documentation and provide it to me so I can implement it correctly."*
+11. **Do not hallucinate component APIs.** If you need to use an MUI component (or any third-party library) and you are not 100% sure of the exact props/API for the current version, explicitly tell the user: *"Please search the web for the [Component Name] documentation and provide it to me so I can implement it correctly."*
 
 12. **Enterprise Naming Standard:** All files and folders must use industry-standard, concise enterprise-grade naming conventions.
     - **Folders/Directories**: Always `kebab-case` (e.g., `phone-entry`, `borrower-layout`, `auth`).
