@@ -383,14 +383,17 @@ Test what the user sees (rendered output, interactions, validation messages, emp
 
 | Type | Convention | Example |
 |---|---|---|
-| Pages | PascalCase + `Page` suffix | `LoanApplicationPage.tsx` |
-| Components | PascalCase | `OtpForm.tsx`, `PersonalInfoStep.tsx` |
-| Hooks | camelCase + `use` prefix | `useSendOtp.ts`, `useSubmitApplication.ts` |
-| Services | camelCase + `.service` suffix | `otpAuth.service.ts` |
-| Schemas | camelCase + `.schema` suffix | `phone.schema.ts` |
-| Types | camelCase + `.types` suffix | `auth.types.ts` |
-| SCSS modules | PascalCase + `.module.scss` | `OtpForm.module.scss` |
-| Mock data | camelCase + `.mock.json` | `otpAuth.mock.json` |
+| Folders (All) | `kebab-case` | `phone-entry`, `borrower-layout`, `auth` |
+| Pages | `PascalCase` + `Page` suffix | `LoanApplicationPage.tsx`, `PhoneEntryPage.tsx` |
+| Components | `PascalCase` | `OtpForm.tsx`, `PhoneForm.tsx` |
+| Hooks | `camelCase` + `use` prefix | `useSendOtp.ts` |
+| Services | `kebab-case` or `camelCase` + `.service` suffix | `otp-auth.service.ts` |
+| Schemas | `kebab-case` or `camelCase` + `.schema` suffix | `phone.schema.ts` |
+| Types | `kebab-case` or `camelCase` + `.types` suffix | `auth.types.ts` |
+| SCSS modules | Match Component name + `.module.scss` | `PhoneForm.module.scss` |
+| Mock data | Match Service name + `.mock.json` | `otp-auth.mock.json` |
+
+> **Naming Principle:** Keep names concise and clear, avoiding extreme verbosity (e.g., prefer `PhoneForm` over `MobileNumberInputForm`) but avoiding cryptic abbreviations.
 
 ---
 

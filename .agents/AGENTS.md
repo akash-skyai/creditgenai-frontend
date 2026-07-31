@@ -50,3 +50,9 @@ If you have not read all three files, stop and read them before proceeding.
 10. **When in doubt about a decision, check `PROJECT_STRUCTURE.md` Section 2 (Confirmed Decisions). If it is not there, ask the user before guessing.**
 
 11. **Do not hallucinate component APIs.** If you need to use a PrimeReact component (or any third-party library) and you are not 100% sure of the exact props/API for the current version, explicitly tell the user: *"Please search the web for the [Component Name] documentation and provide it to me so I can implement it correctly."*
+
+12. **Enterprise Naming Standard:** All files and folders must use industry-standard, concise enterprise-grade naming conventions.
+    - **Folders/Directories**: Always `kebab-case` (e.g., `phone-entry`, `borrower-layout`, `auth`).
+    - **React Components/Pages**: `PascalCase` with concise suffixes (e.g., `PhoneEntryPage.tsx`, `PhoneForm.tsx`).
+    - **Hooks/Services/Utils/Schemas**: `camelCase` or `kebab-case` depending on standard context, keeping names concise but clear (e.g., `useSendOtp.ts`, `otp-auth.service.ts`, `phone.schema.ts`).
+    - **Naming Principle**: Keep names concise and clear, avoiding extreme verbosity (e.g., use `PhoneForm` instead of `MobileNumberInputForm`) but do not use cryptic abbreviations.
