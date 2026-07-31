@@ -44,20 +44,134 @@ These decisions were made deliberately. Do not reverse them without a documented
 |---|---|
 | One frontend repo | All portals live here. Backend is a separate repo. |
 | Auth is per-entity | Each entity has its own `auth/` sub-module and its own service. There is no shared auth service. |
-| Borrower = OTP only | No password, no Google, no magic link. Mobile number → 6-digit OTP → JWT token |
-| Borrower has no dashboard | The borrower fills a form and leaves. No logged-in state after submission. |
+| Borrower = OTP only | No password, no Google, no magic link. Mobile number → 6-digit OTP → verified. Auth session/token internals are **backend concern — deferred**. UI just shows the screens. |
+| Borrower has no dashboard | The borrower fills a form and leaves. There is no post-submission logged-in view. |
 | Borrower has no dark mode toggle | The borrower portal is a single-purpose form. No theme toggle is shown. CSS variables are still defined globally — the toggle just isn't exposed. |
 | Dark mode toggle is Internal only | Toggle lives in `InternalLayout` (used by LP, Call Center, DSA, Admin). `BorrowerLayout` has no toggle. |
 | Two layouts | `BorrowerLayout` = minimal shell (logo + form). `InternalLayout` = full shell (navbar + sidebar + dark mode toggle). |
 | Mock strategy = one flag | `VITE_USE_MOCK=true` in `.env` → mock data. `false` → real API. Flip one flag, nothing else changes. |
 | Routing is root-agnostic | Exact root path prefix (`/creditgenai`, `/app`, etc.) is TBD. All routes are relative. Only `AppRoutes.tsx` is updated when the root is decided. No module needs to know the root. |
+| Auth implementation is deferred | JWT format, token storage (cookie vs localStorage), refresh strategy — all backend decisions. The UI service layer will accept and forward whatever the backend returns. Do not hard-code auth storage logic now. |
 | No i18n | India-only launch. Text stays in components. No `locales/` folder. |
 | No `.js` or `.jsx` files | TypeScript only. Every file is `.tsx` or `.ts`. |
 | No `any` type | TypeScript strict mode. No exceptions. |
 
 ---
 
-## 4. Layouts
+## 4. Borrower — UI Flow (production-grade, screens only)
+
+This describes **what the user sees** at each step.
+Auth implementation (how sessions are stored, token format, refresh) is a backend decision — deferred.
+Do not hard-code session/token logic in any UI component.
+
+```
+LP creates a referral link  →  /apply  OR  /apply/:trackingId
+                                         (trackingId held in UI state, sent at submit)
+         │
+         ▼
+╔═════════════════════════════════╗
+║  SCREEN 1 — PhoneEntryPage      ║  PUBLIC (no guard)
+║  URL: /apply  or  /apply/:id    ║
+║                                 ║
+║  • CreditGenAI logo + tagline   ║
+║  • "Enter your mobile number"   ║
+║  • +91 prefix, 10-digit input   ║
+║  • [Send OTP] primary button    ║
+║  • Terms & Privacy link         ║
+╚═════════════════════════════════╝
+         │  valid 10-digit number submitted
+         ▼
+╔═════════════════════════════════╗
+║  SCREEN 2 — OtpVerifyPage       ║  SOFT GUARD (phone must be in state)
+║  URL: /apply/verify-otp         ║
+║                                 ║
+║  • "OTP sent to +91 XXXXXX7890" ║
+║  • 6-box OTP input (auto-focus) ║
+║  • Countdown timer (30s)        ║
+║  • [Resend OTP] after timer     ║
+║  • [← Change Number] back link  ║
+║  • [Verify & Continue] button   ║
+╚═════════════════════════════════╝
+         │  OTP verified
+         ▼
+         ├─── NEW user ──────────────────────────────────────────────────────┐
+         │                                                                   │
+         │                              RETURNING user (prior draft exists)  │
+         │                         ╔══════════════════════════════════════╗  │
+         │                         ║  ReturningUserModal (inline modal)   ║  │
+         │                         ║                                      ║  │
+         │                         ║  "Welcome Back 👋"                   ║  │
+         │                         ║  Progress bar (e.g. 45% complete)    ║  │
+         │                         ║  Steps completed checklist           ║  │
+         │                         ║                                      ║  │
+         │                         ║  [Resume Application]  ← primary     ║  │
+         │                         ║  [Start New Application] ← secondary ║  │
+         │                         ╚══════════════════════════════════════╝  │
+         │                                      │                            │
+         │                         resume ──────┘          start new ────────┤
+         └───────────────────────────────────────────────────────────────────┘
+         │
+         ▼
+╔═════════════════════════════════════════════════════════════════════╗
+║  SCREEN 3 — LoanApplicationPage                                     ║  HARD GUARD
+║  URL: /apply/form                                                   ║
+║                                                                     ║
+║  ┌──────────────────────────────────────────────────────┐   ║
+║  │ Stepper:  [1 Basic] ──── [2 Employment & Loan] ──── [3 Review] │   ║
+║  └──────────────────────────────────────────────────────┘   ║
+║                                                                     ║
+║  STEP 1 — Personal Details                                          ║
+║    First / Middle / Last Name                                       ║
+║    Mobile (pre-filled, read-only, verified lock icon)               ║
+║    Email, Gender, Date of Birth                                     ║
+║    PAN Number (format: ABCDE1234F)                                  ║
+║    PIN Code → auto-fills City + State via Postal API               ║
+║    [Next →]                                                         ║
+║                                                                     ║
+║  STEP 2 — Employment & Loan Details                                 ║
+║    Employment Type: [Salaried] / [Self-Employed]                    ║
+║      If Salaried → Sector (Govt/Private) → Org/Company name        ║
+║      If Self-Employed → Business type → Total experience            ║
+║    Monthly Income, Existing EMI                                     ║
+║    Loan Amount (slider + number input)                              ║
+║    Loan Purpose (dropdown, "Other" reveals text field)              ║
+║    Loan Tenure (12/24/36/48/60/72/84 months)                        ║
+║    Estimated EMI (live calculation, read-only)                      ║
+║    [← Back]  [Next →]                                              ║
+║                                                                     ║
+║  STEP 3 — Review & Submit                                           ║
+║    Summary of all entered data (read-only)                          ║
+║    [← Back]  [Submit Application] ← final CTA                      ║
+╚═════════════════════════════════════════════════════════════════════╝
+         │  submitted
+         ▼
+╔═════════════════════════════════╗
+║  SuccessScreen (component,      ║  Rendered inside LoanApplicationPage
+║  not a separate route)          ║  NOT a new URL
+║                                 ║
+║  Application Reference ID       ║
+║  "Under Review" status badge    ║
+║  Expected SLA / next steps      ║
+║  "Our advisor will contact you" ║
+╚═════════════════════════════════╝
+```
+
+### Why this flow order (industry rationale)
+- **OTP before form** — Captures identity first. Prevents duplicate/fake submissions. Enables resume-from-draft on the same number. Standard in every Indian fintech (BankBazaar, PaisaBazaar, MoneyView, etc.).
+- **Mobile pre-filled + locked on form** — OTP-verified number can't be tampered with. Shows borrower the number is verified (trust signal).
+- **Returning user modal** — Critical for resume flow. Prevents frustration of refilling a long form. Shows progress % to motivate completion.
+- **Review step before submit** — Lets borrower catch errors. Reduces support tickets. Standard in compliance-sensitive forms.
+- **SuccessScreen = component, not a route** — Prevents direct navigation to success without submitting. Avoids a "back" button re-submitting.
+
+### Notes on implementation
+- `trackingId` from the LP link URL is captured on Screen 1 and passed through to the final submit payload.
+- PIN Code auto-fill (City + State) calls the India Postal API — this is a frontend-to-third-party call, not through the main backend.
+- EMI calculator is a pure frontend computation — no API call needed.
+- No document upload — the borrower form is **text-only**. Documents are not collected at this stage.
+
+---
+
+## 5. Layouts
 
 There are exactly two layouts. Never add conditional logic inside a layout to handle both entity types — that is the pattern we are avoiding.
 
@@ -73,7 +187,7 @@ There are exactly two layouts. Never add conditional logic inside a layout to ha
 
 ---
 
-## 5. Universal Module Pattern
+## 6. Universal Module Pattern
 
 This is the **template** for every entity module. When adding a new entity, follow this exactly.
 Replace `[entity]` with the folder name from the Entity Registry (e.g. `call-center`, `dsa`).
@@ -137,7 +251,7 @@ src/modules/[entity]/
 
 ---
 
-## 6. Shared Components — Promotion Rule
+## 7. Shared Components — Promotion Rule
 
 Do NOT add a component to `shared/components/` speculatively.
 
@@ -160,7 +274,7 @@ Everything else starts inside the module. Promote later when earned.
 
 ---
 
-## 7. Routing Pattern
+## 8. Routing Pattern
 
 ```
 AppRoutes.tsx
@@ -176,16 +290,24 @@ AppRoutes.tsx
 - Every route-level page is **lazy loaded** with `React.lazy()` and wrapped in `<Suspense fallback={<PageLoader />}>`.
 - Each entity's routes file is responsible for its own auth guard.
 
-### Guard levels (standard pattern)
+### Guard levels (standard pattern — UI state only, not implementation)
 ```
-PUBLIC      → No token required (login pages, borrower entry)
-SOFT GUARD  → Intermediate state required (e.g. phone in state before OTP page)
-HARD GUARD  → Valid JWT token required (all authenticated pages)
+PUBLIC      → Anyone can land here. No prior UI state needed.
+              (borrower entry /apply, all login pages)
+
+SOFT GUARD  → A previous UI step must have completed.
+              (e.g. phone number must have been submitted before OTP page is accessible)
+              Implementation: check React context / route state — details deferred.
+
+HARD GUARD  → User must have completed full verification.
+              (all post-auth pages: form, dashboard, etc.)
+              Implementation: how this is checked (cookie, context flag, etc.) is decided
+              when backend auth contract is finalised. Do not hard-code now.
 ```
 
 ---
 
-## 8. Services & Mock Strategy
+## 9. Services & Mock Strategy
 
 Every service file follows this exact pattern. No exceptions.
 
@@ -212,7 +334,7 @@ export async function [actionName](payload: [PayloadType]): Promise<[ReturnType]
 
 ---
 
-## 9. Styling Rules (summary — full detail in FRONTEND_DEV_RULES_V2.md)
+## 10. Styling Rules (summary — full detail in FRONTEND_DEV_RULES_V2.md)
 
 - `styles/globals.scss` — design tokens (colors, spacing, radius, font sizes), CSS variables, dark mode overrides, reset, `prefers-reduced-motion` block
 - `[Component].module.scss` — layout and spacing for that component only. References CSS vars from globals. Never redefines color or spacing values.
@@ -221,7 +343,7 @@ export async function [actionName](payload: [PayloadType]): Promise<[ReturnType]
 
 ---
 
-## 10. Data Flow — One Rule, No Exceptions
+## 11. Data Flow — One Rule, No Exceptions
 
 ```
 Page / Component  →  Hook (TanStack Query)  →  Service  →  api-client  →  Backend
@@ -231,7 +353,7 @@ If you find yourself calling `fetch` or `axios` inside a component or a page, st
 
 ---
 
-## 11. Testing Convention
+## 12. Testing Convention
 
 Every file that matters gets a sibling test file.
 
@@ -246,7 +368,7 @@ Test what the user sees (rendered output, interactions, validation messages, emp
 
 ---
 
-## 12. Adding a New Entity — Checklist for Agents
+## 13. Adding a New Entity — Checklist for Agents
 
 When a new entity module needs to be created (e.g. `call-center`):
 
@@ -261,7 +383,7 @@ When a new entity module needs to be created (e.g. `call-center`):
 
 ---
 
-## 13. File Naming Conventions
+## 14. File Naming Conventions
 
 | Type | Convention | Example |
 |---|---|---|
@@ -276,7 +398,7 @@ When a new entity module needs to be created (e.g. `call-center`):
 
 ---
 
-## 14. Related Documents
+## 15. Related Documents
 
 | Document | Purpose |
 |---|---|
