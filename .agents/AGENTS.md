@@ -33,7 +33,7 @@ If you have not read all three files, stop and read them before proceeding.
 
 2. **Never create a file outside the module pattern.** Every page, component, hook, service, schema, and type lives inside `src/modules/borrower/[feature]/` as defined in `PROJECT_STRUCTURE.md` Section 4.
 
-3. **Never add a component to `shared/components/` without confirming it is used by two or more modules.** Start inside the module. Promote when earned. The pre-approved list is in `PROJECT_STRUCTURE.md` Section 6.
+3. **Never add a component or layout to `shared/` without confirming it is used by two or more modules.** Start inside the module. Promote when earned. The pre-approved list is in `PROJECT_STRUCTURE.md` Section 6. There are no exceptions for layouts.
 
 4. **Never write a URL string anywhere except `src/services/endpoints.ts`.** Not in a service, not in a hook, not in a component.
 

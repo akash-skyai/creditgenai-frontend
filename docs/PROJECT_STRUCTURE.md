@@ -179,6 +179,12 @@ src/
 │       │   └── types/
 │       │       └── auth.types.ts
 │       │
+│       ├── layouts/
+│       │   └── BorrowerLayout/
+│       │       ├── BorrowerLayout.tsx
+│       │       ├── BorrowerLayout.module.scss
+│       │       └── BorrowerLayout.test.tsx
+│       │
 │       └── loan-application/
 │           ├── pages/
 │           │   └── LoanApplicationPage/
@@ -217,12 +223,7 @@ src/
 │               └── loanApplication.types.ts
 │
 ├── shared/
-│   ├── layouts/
-│   │   └── BorrowerLayout/             ← logo + form shell, no nav, no dark mode toggle
-│   │       ├── BorrowerLayout.tsx
-│   │       ├── BorrowerLayout.module.scss
-│   │       └── BorrowerLayout.test.tsx
-│   └── components/                     ← only components confirmed used by 2+ modules
+│   ├── components/                     ← only components confirmed used by 2+ modules
 │       ├── Button/
 │       ├── Input/
 │       ├── OtpInput/
@@ -273,10 +274,12 @@ src/
 
 ---
 
-## 6. Shared Components — Promotion Rule
+## 6. Shared Components & Layouts — Promotion Rule
 
-Build every new component **inside the module** that needs it first.  
-Move it to `shared/components/` **only when a second module actually needs it**.
+Build every new component, hook, or layout **inside the module** that needs it first.  
+Move it to `shared/` **only when a second module actually needs it**. 
+
+There is no "free pass" for layouts. If a layout is only used by the Borrower module, it lives in `src/modules/borrower/layouts/`.
 
 Pre-approved for `shared/` (genuinely used by multiple modules):
 
