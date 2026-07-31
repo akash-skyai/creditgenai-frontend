@@ -1,0 +1,380 @@
+                                <!-- Expandable Direct Upload Files Section (Revealed when Upload Now is clicked) -->
+                                <div id="uploadFilesSection" class="upload-files-section hidden">
+                                    <div class="upload-premium-container">
+                                        <!-- Left Column: Vertical Progress Stepper -->
+                                        <div class="upload-stepper-column">
+                                            <div class="vertical-stepper">
+                                                <h4 class="vertical-stepper-title">Required Documents</h4>
+
+                                                <!-- PAN Card Item -->
+                                                <div class="v-step pending" id="v-step-pan">
+                                                    <div class="v-step-indicator">
+                                                        <div class="v-step-circle"></div>
+                                                        <div class="v-step-line"></div>
+                                                    </div>
+                                                    <div class="v-step-content">
+                                                        <span class="v-step-name">PAN Card</span>
+                                                        <span class="v-step-status" id="v-status-pan">Not Started</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Aadhaar Card Item -->
+                                                <div class="v-step pending" id="v-step-aadhaar">
+                                                    <div class="v-step-indicator">
+                                                        <div class="v-step-circle"></div>
+                                                        <div class="v-step-line"></div>
+                                                    </div>
+                                                    <div class="v-step-content">
+                                                        <span class="v-step-name">Aadhaar Card (Front &amp; Back)</span>
+                                                        <span class="v-step-status" id="v-status-aadhaar">Not Started</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Salary Slips Item (Initially Completed/Uploaded) -->
+                                                <div class="v-step completed" id="v-step-salary">
+                                                    <div class="v-step-indicator">
+                                                        <div class="v-step-circle check-circle">✓</div>
+                                                        <div class="v-step-line completed-line"></div>
+                                                    </div>
+                                                    <div class="v-step-content">
+                                                        <span class="v-step-name">Latest 3 Months Salary Slips</span>
+                                                        <span class="v-step-status status-completed" id="v-status-salary">Uploaded</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Bank Statement Item -->
+                                                <div class="v-step pending" id="v-step-bank">
+                                                    <div class="v-step-indicator">
+                                                        <div class="v-step-circle"></div>
+                                                        <div class="v-step-line"></div>
+                                                    </div>
+                                                    <div class="v-step-content">
+                                                        <span class="v-step-name">Last 6 Months Salary Bank Statement</span>
+                                                        <span class="v-step-status" id="v-status-bank">Not Started</span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Review & Submit Item -->
+                                                <div class="v-step current" id="v-step-review">
+                                                    <div class="v-step-indicator">
+                                                        <div class="v-step-circle current-circle"></div>
+                                                    </div>
+                                                    <div class="v-step-content">
+                                                        <span class="v-step-name">Review &amp; Submit</span>
+                                                        <span class="v-step-status status-ready" id="v-status-review">Ready to Submit</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Right Column: Main Content & Document Upload Cards -->
+                                        <div class="upload-cards-column">
+                                            <form id="step-3-form">
+                                                
+                                                <div class="stacked-doc-cards-list">
+                                                    <!-- Card 1: PAN Card (Blue Gradient) -->
+                                                    <div class="premium-doc-card card-blue-gradient" id="card-pan">
+                                                        <div class="doc-card-main-row">
+                                                            <div class="doc-icon-box box-blue">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                                                                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                                                                    <line x1="7" y1="8" x2="17" y2="8" />
+                                                                    <line x1="7" y1="12" x2="13" y2="12" />
+                                                                    <line x1="7" y1="16" x2="10" y2="16" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="doc-info-col">
+                                                                <h4 class="doc-title-text">PAN Card</h4>
+                                                                <div class="doc-chip-row">
+                                                                    <span class="chip-badge chip-req">REQUIRED</span>
+                                                                    <span class="chip-badge chip-pend" id="badge-pan">PENDING</span>
+                                                                </div>
+                                                                <p class="doc-helper-note">Upload a clear copy of your PAN Card.</p>
+                                                            </div>
+                                                            <div class="doc-action-col">
+                                                                <button type="button" class="btn-doc-upload" id="chip-btn-pan" onclick="document.getElementById('input-pan').click()">
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                                                    <span>Upload</span>
+                                                                </button>
+                                                                <div class="btn-doc-uploaded hidden" id="chip-uploaded-pan" style="display:none;" onclick="document.getElementById('input-pan').click()">
+                                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <span>Uploaded</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="upload-zone-pan" style="display:none;"></div>
+                                                        <input type="file" id="input-pan" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                                                        <div class="upload-error hidden" id="error-pan"></div>
+                                                        <div class="upload-progress hidden" id="progress-pan"><div class="progress-bar-track"><div class="progress-bar-fill"></div></div><span class="progress-text">Uploading...</span></div>
+                                                        <div class="doc-preview-card hidden" id="preview-pan" style="display:none;">
+                                                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                                                                <span style="font-size:22px;">📄</span>
+                                                                <div><div id="file-name-pan" style="font-size:13px;font-weight:600;">file.pdf</div><div id="file-meta-pan" style="font-size:11px;color:#64748B;">2.1 MB</div></div>
+                                                            </div>
+                                                            <div style="display:flex;gap:8px;"><button type="button" onclick="deleteDocument('pan')" style="padding:4px 10px;border-radius:4px;border:none;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600;cursor:pointer;">🗑 Remove</button></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Card 2: Aadhaar Card (Front & Back) (Purple Gradient) -->
+                                                    <div class="premium-doc-card card-purple-gradient" id="card-aadhaar">
+                                                        <div class="doc-card-main-row">
+                                                            <div class="doc-icon-box box-purple">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2">
+                                                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="doc-info-col">
+                                                                <h4 class="doc-title-text">Aadhaar Card (Front &amp; Back)</h4>
+                                                                <div class="doc-chip-row">
+                                                                    <span class="chip-badge chip-req">REQUIRED</span>
+                                                                    <span class="chip-badge chip-pend" id="badge-aadhaar">PENDING</span>
+                                                                </div>
+                                                                <p class="doc-helper-note">Upload clear copies of the front and back of your Aadhaar Card.</p>
+                                                            </div>
+                                                            <div class="doc-action-col">
+                                                                <button type="button" class="btn-doc-upload" id="chip-btn-aadhaar" onclick="showAadhaarSplitUpload()">
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                                                    <span>Upload</span>
+                                                                </button>
+                                                                <div class="btn-doc-uploaded hidden" id="chip-uploaded-aadhaar" style="display:none;">
+                                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <span>Uploaded</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="upload-zone-aadhaar" style="display:none;"></div>
+                                                        
+                                                        <!-- Compact summary preview for Aadhaar -->
+                                                        <div class="doc-preview-card hidden" id="preview-aadhaar-summary" style="display:none; padding:16px; border-top:1px solid #E9D5FF; background: #FFFFFF;">
+                                                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                                                                <span style="font-size:22px;">📄</span>
+                                                                <div><div style="font-size:13px;font-weight:600;">Aadhaar Front &amp; Back Uploaded</div><div style="font-size:11px;color:#64748B;">2 documents &bull; Verified</div></div>
+                                                            </div>
+                                                            <div style="display:flex;gap:8px;">
+                                                                <button type="button" onclick="showAadhaarSplitUpload()" style="padding:4px 10px;border-radius:4px;border:none;background:#F1F5F9;color:#475569;font-size:11px;font-weight:600;cursor:pointer;">🔄 Replace</button>
+                                                                <button type="button" onclick="deleteDocument('aadhaar')" style="padding:4px 10px;border-radius:4px;border:none;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600;cursor:pointer;">🗑 Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Card 3: Latest 3 Months Salary Slips (Green Gradient) -->
+                                                    <div class="premium-doc-card card-green-gradient" id="card-salary">
+                                                        <div class="doc-card-main-row">
+                                                            <div class="doc-icon-box box-green">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2">
+                                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="doc-info-col">
+                                                                <h4 class="doc-title-text">Latest 3 Months Salary Slips</h4>
+                                                                <div class="doc-chip-row">
+                                                                    <span class="chip-badge chip-req">REQUIRED</span>
+                                                                    <span class="chip-badge chip-up" id="badge-salary">UPLOADED</span>
+                                                                </div>
+                                                                <p class="doc-helper-note">Upload a clear copy of your Latest 3 Months Salary Slips.</p>
+                                                            </div>
+                                                            <div class="doc-action-col">
+                                                                <button type="button" class="btn-doc-upload hidden" id="chip-btn-salary" style="display:none;" onclick="document.getElementById('input-salary').click()">
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                                                    <span>Upload</span>
+                                                                </button>
+                                                                <div class="btn-doc-uploaded" id="chip-uploaded-salary" onclick="document.getElementById('input-salary').click()">
+                                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <span>Uploaded</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="upload-zone-salary" style="display:none;"></div>
+                                                        <input type="file" id="input-salary" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                                                        <div class="upload-error hidden" id="error-salary"></div>
+                                                        <div class="upload-progress hidden" id="progress-salary"><div class="progress-bar-track"><div class="progress-bar-fill"></div></div><span class="progress-text">Uploading...</span></div>
+                                                        <div class="doc-preview-card" id="preview-salary" style="display:block; padding: 16px; border-top: 1px solid #BBF7D0; background: #FFFFFF;">
+                                                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                                                                <span style="font-size:22px;">📄</span>
+                                                                <div><div id="file-name-salary" style="font-size:13px;font-weight:600;">salary_slips_3_months.pdf</div><div id="file-meta-salary" style="font-size:11px;color:#64748B;">2.4 MB</div></div>
+                                                            </div>
+                                                            <div style="display:flex;gap:8px;"><button type="button" onclick="deleteDocument('salary')" style="padding:4px 10px;border-radius:4px;border:none;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600;cursor:pointer;">🗑 Remove</button></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Card 4: Last 6 Months Salary Bank Statement (Orange Gradient) -->
+                                                    <div class="premium-doc-card card-orange-gradient" id="card-bank">
+                                                        <div class="doc-card-main-row">
+                                                            <div class="doc-icon-box box-orange">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2">
+                                                                    <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v4M12 14v4M16 14v4"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="doc-info-col">
+                                                                <h4 class="doc-title-text">Last 6 Months Salary Bank Statement</h4>
+                                                                <div class="doc-chip-row">
+                                                                    <span class="chip-badge chip-req">REQUIRED</span>
+                                                                    <span class="chip-badge chip-pend" id="badge-bank">PENDING</span>
+                                                                </div>
+                                                                <p class="doc-helper-note">Upload a clear copy of your Last 6 Months Salary Bank Statement.</p>
+                                                            </div>
+                                                            <div class="doc-action-col">
+                                                                <button type="button" class="btn-doc-upload" id="chip-btn-bank" onclick="document.getElementById('input-bank').click()">
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                                                    <span>Upload</span>
+                                                                </button>
+                                                                <div class="btn-doc-uploaded hidden" id="chip-uploaded-bank" style="display:none;" onclick="document.getElementById('input-bank').click()">
+                                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <span>Uploaded</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="upload-zone-bank" style="display:none;"></div>
+                                                        <input type="file" id="input-bank" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                                                        <div class="upload-error hidden" id="error-bank"></div>
+                                                        <div class="upload-progress hidden" id="progress-bank"><div class="progress-bar-track"><div class="progress-bar-fill"></div></div><span class="progress-text">Uploading...</span></div>
+                                                        <div class="doc-preview-card hidden" id="preview-bank" style="display:none;">
+                                                            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                                                                <span style="font-size:22px;">📄</span>
+                                                                <div><div id="file-name-bank" style="font-size:13px;font-weight:600;">file.pdf</div><div id="file-meta-bank" style="font-size:11px;color:#64748B;">2.1 MB</div></div>
+                                                            </div>
+                                                            <div style="display:flex;gap:8px;"><button type="button" onclick="deleteDocument('bank')" style="padding:4px 10px;border-radius:4px;border:none;background:#FEF2F2;color:#DC2626;font-size:11px;font-weight:600;cursor:pointer;">🗑 Remove</button></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Upload Guidelines Card -->
+                                                <div class="upload-guidelines-banner">
+                                                    <div class="guidelines-header-row">
+                                                        <div class="guidelines-icon-circle">
+                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.2">
+                                                                <circle cx="12" cy="12" r="10"/>
+                                                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="guidelines-title">Upload Guidelines</h4>
+                                                    </div>
+                                                    <ul class="guidelines-bullet-list">
+                                                        <li><span class="g-bullet">•</span> Supported formats: PDF, JPG, JPEG, PNG</li>
+                                                        <li><span class="g-bullet">•</span> Maximum file size: 10 MB per document</li>
+                                                        <li><span class="g-bullet">•</span> Upload clear, readable documents.</li>
+                                                        <li><span class="g-bullet">•</span> Ensure all uploaded documents are valid and unedited.</li>
+                                                        <li><span class="g-bullet">•</span> Aadhaar Card must include both Front and Back images.</li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- Bottom Action Bar -->
+                                                <div class="upload-bottom-action-bar">
+                                                    <button type="button" class="btn-back-clean" id="btnBackToChoice" onclick="document.getElementById('btnBackToChoice').click()">← Back</button>
+                                                    
+                                                    <div class="center-declaration-box">
+                                                        <div class="shield-blue-icon">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <p class="declaration-p">
+                                                            By submitting, you confirm that all uploaded documents are authentic and belong to you. Providing incorrect or fraudulent documents may result in rejection of your loan application.
+                                                        </p>
+                                                    </div>
+                                                    
+                                                    <button type="submit" class="btn-submit-verification-cta" id="btnSubmitDocs">Submit Documents for Verification →</button>
+                                                </div>
+
+                                            </form>
+
+                                            <!-- Right-Side Slide-Over Drawer for Aadhaar -->
+                                            <div class="aadhaar-drawer-overlay hidden" id="aadhaar-modal" style="display:none;" onclick="closeAadhaarModal()">
+                                                <div class="aadhaar-slide-drawer" onclick="event.stopPropagation()">
+                                                    <div class="drawer-header">
+                                                        <div class="drawer-header-text">
+                                                            <h3>Upload Aadhaar Card</h3>
+                                                            <p>Please upload both Front and Back sides of your Aadhaar Card.</p>
+                                                        </div>
+                                                        <button type="button" class="drawer-close-btn" onclick="closeAadhaarModal()">&times;</button>
+                                                    </div>
+                                                    <div class="drawer-body-scroll">
+                                                        <!-- Front Side Section -->
+                                                        <div class="drawer-doc-section">
+                                                            <label class="drawer-sec-label">Aadhaar Front Side <span class="req-star">*</span></label>
+                                                            <div class="dashed-upload-zone" id="upload-zone-aadhaar-front" onclick="document.getElementById('input-aadhaar-front').click()">
+                                                                <div class="zone-cloud-icon">
+                                                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="zone-main-text">Click to upload or drag and drop</div>
+                                                                <div class="zone-sub-text">PDF, JPG, PNG (Max 10MB)</div>
+                                                            </div>
+                                                            <input type="file" id="input-aadhaar-front" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                                                            <div class="upload-error hidden" id="error-aadhaar-front" style="color:#DC2626;font-size:12px;margin-top:6px;"></div>
+                                                            <div class="upload-progress hidden" id="progress-aadhaar-front" style="margin-top:8px;">
+                                                                <div class="progress-bar-track" style="height:4px;background:#E2E8F0;border-radius:2px;"><div class="progress-bar-fill" style="width:0%;height:100%;background:var(--primary-blue);"></div></div>
+                                                                <span class="progress-text" style="font-size:11px;color:var(--text-muted);display:block;margin-top:4px;">Uploading...</span>
+                                                            </div>
+                                                            <!-- Front Preview -->
+                                                            <div class="drawer-file-card hidden" id="preview-aadhaar-front" style="display:none;">
+                                                                <div class="file-card-left">
+                                                                    <div style="font-size:24px;background:#FFFFFF;border-radius:8px;padding:4px;">📄</div>
+                                                                    <div>
+                                                                        <span class="f-name" id="file-name-aadhaar-front">aadhaar_front.pdf</span>
+                                                                        <span class="f-size" id="file-meta-aadhaar-front">1.2 MB</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-card-right">
+                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <button class="btn-trash-remove" onclick="deleteAadhaarPart('front')" title="Remove Document">
+                                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Back Side Section -->
+                                                        <div class="drawer-doc-section">
+                                                            <label class="drawer-sec-label">Aadhaar Back Side <span class="req-star">*</span></label>
+                                                            <div class="dashed-upload-zone" id="upload-zone-aadhaar-back" onclick="document.getElementById('input-aadhaar-back').click()">
+                                                                <div class="zone-cloud-icon">
+                                                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="zone-main-text">Click to upload or drag and drop</div>
+                                                                <div class="zone-sub-text">PDF, JPG, PNG (Max 10MB)</div>
+                                                            </div>
+                                                            <input type="file" id="input-aadhaar-back" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+                                                            <div class="upload-error hidden" id="error-aadhaar-back" style="color:#DC2626;font-size:12px;margin-top:6px;"></div>
+                                                            <div class="upload-progress hidden" id="progress-aadhaar-back" style="margin-top:8px;">
+                                                                <div class="progress-bar-track" style="height:4px;background:#E2E8F0;border-radius:2px;"><div class="progress-bar-fill" style="width:0%;height:100%;background:var(--primary-blue);"></div></div>
+                                                                <span class="progress-text" style="font-size:11px;color:var(--text-muted);display:block;margin-top:4px;">Uploading...</span>
+                                                            </div>
+                                                            <!-- Back Preview -->
+                                                            <div class="drawer-file-card hidden" id="preview-aadhaar-back" style="display:none;">
+                                                                <div class="file-card-left">
+                                                                    <div style="font-size:24px;background:#FFFFFF;border-radius:8px;padding:4px;">📄</div>
+                                                                    <div>
+                                                                        <span class="f-name" id="file-name-aadhaar-back">aadhaar_back.pdf</span>
+                                                                        <span class="f-size" id="file-meta-aadhaar-back">1.2 MB</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-card-right">
+                                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                                                                    <button class="btn-trash-remove" onclick="deleteAadhaarPart('back')" title="Remove Document">
+                                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Mandatory Notice -->
+                                                        <div class="drawer-mandatory-notice">
+                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                                            <span>Both Front and Back sides are mandatory to complete the upload.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="drawer-footer">
+                                                        <button type="button" class="btn-drawer-cancel" onclick="closeAadhaarModal()">Cancel</button>
+                                                        <button type="button" class="btn-drawer-done" id="btn-aadhaar-modal-continue" onclick="closeAadhaarModal()" disabled>Done</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
