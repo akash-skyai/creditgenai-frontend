@@ -32,7 +32,7 @@ export const OtpVerifyPage: React.FC = () => {
       {
         onSuccess: (res) => {
           console.log('OTP Verified!', res);
-          // navigate('/apply/form'); // We'll add this later
+          navigate('/apply/form');
         },
         onError: (err) => {
           console.error('OTP failed', err);
