@@ -1,25 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
+  color-scheme: light;
+
   /* Brand */
   --brand-navy: #123b6d;
   --brand-primary: #1d4ed8;
   --brand-primary-hover: #1e40af;
+  --brand-primary-active: #1e3a8a;
   --brand-primary-light: #eff6ff;
-  
+
   /* Surfaces */
   --surface-page: #f8fafc;
   --surface-card: #ffffff;
   --surface-subtle: #f1f5f9;
+  --surface-disabled: #e9eef5;
 
   /* Text */
   --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-muted: #64748b; /* Corrected to match DESIGN_SYSTEM.md */
+  --text-disabled: #7b8798;
+  --text-on-primary: #ffffff;
 
   /* Borders */
   --border-default: #dbe3ec;
   --border-strong: #cbd5e1;
+  --border-control: #8796aa;
 
   /* Status */
   --status-success: #15803d;
@@ -27,49 +34,167 @@
   --status-danger: #b42318;
   --status-info: #0369a1;
 
+  /* Status surfaces */
+  --status-success-light: #f0fdf4;
+  --status-warning-light: #fffbeb;
+  --status-danger-light: #fef2f2;
+  --status-info-light: #f0f9ff;
 
   /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-size-xs: 0.75rem;   /* 12px */
-  --font-size-sm: 0.875rem;  /* 14px */
-  --font-size-base: 1rem;    /* 16px */
-  --font-size-lg: 1.125rem;  /* 18px */
-  --font-size-xl: 1.5rem;    /* 24px */
-  --font-size-2xl: 2rem;     /* 32px */
+  --font-family:
+    'Inter',
+    'Noto Sans Devanagari',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-card:
+    0 1px 2px rgb(15 23 42 / 4%),
+    0 4px 12px rgb(15 23 42 / 6%);
+
+  /* Layout */
+  --content-max-width: 75rem;
+  --form-max-width: 35rem;
 }
 
-/* Reset */
-*, *::before, *::after {
+/* Controlled reset */
+html {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  font-size: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
+  margin: 0;
+  min-width: 20rem; /* Responsive floor */
+
   font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+
+  color: var(--text-primary);
   background-color: var(--surface-page);
-  color: var(--text-secondary);
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-primary);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%; /* Responsive images */
 }
 
 a {
   color: var(--brand-primary);
-  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
-/* Accessibility: Respect reduced motion */
+:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: var(--text-primary);
+  background-color: var(--brand-primary-light);
+}
+
+/* Accessibility: respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
