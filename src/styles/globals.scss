@@ -1,23 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Colors */
-  --color-primary: #4F46E5;
-  --color-primary-dark: #3730A3;
-  --color-accent: #06B6D4;
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
+  /* Brand */
+  --brand-navy: #123b6d;
+  --brand-primary: #1d4ed8;
+  --brand-primary-hover: #1e40af;
+  --brand-primary-light: #eff6ff;
   
-  --color-bg: #F8FAFF;
-  --color-surface: #FFFFFF;
-  
-  --color-text-heading: #111827;
-  --color-text-body: #374151;
-  --color-text-muted: #6B7280;
-  
-  --color-border: #E5E7EB;
-  --color-border-focus: #4F46E5;
+  /* Surfaces */
+  --surface-page: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-subtle: #f1f5f9;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  /* Borders */
+  --border-default: #dbe3ec;
+  --border-strong: #cbd5e1;
+
+  /* Status */
+  --status-success: #15803d;
+  --status-warning: #b45309;
+  --status-danger: #b42318;
+  --status-info: #0369a1;
+
+  /* Hide PrimeReact v11 License Watermark */
+  #p-license-host {
+    display: none !important;
+  }
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -38,19 +51,19 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: var(--color-text-body);
+  background-color: var(--surface-page);
+  color: var(--text-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-text-heading);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--brand-primary);
   text-decoration: none;
 }
 

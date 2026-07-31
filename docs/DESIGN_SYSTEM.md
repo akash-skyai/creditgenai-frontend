@@ -15,19 +15,22 @@ These tokens are globally defined in `src/styles/globals.scss`. **Never hardcode
 
 | Token | Hex | Usage |
 |---|---|---|
-| `--color-primary` | `#4F46E5` | Primary buttons, active states, links, main brand color |
-| `--color-primary-dark` | `#3730A3` | Primary button hover, pressed states |
-| `--color-accent` | `#06B6D4` | Progress bar highlights, secondary accents |
-| `--color-success` | `#10B981` | OTP verified badges, success toasts, lock icons |
-| `--color-warning` | `#F59E0B` | Pending states, warnings |
-| `--color-danger` | `#EF4444` | Errors, validation messages, destructive actions |
-| `--color-bg` | `#F8FAFF` | Page background (very slight blue tint) |
-| `--color-surface` | `#FFFFFF` | Cards, form containers, elevated elements |
-| `--color-text-heading` | `#111827` | All page/card headings |
-| `--color-text-body` | `#374151` | Default body text |
-| `--color-text-muted` | `#6B7280` | Labels, helper text, placeholders |
-| `--color-border` | `#E5E7EB` | Default input borders, dividers |
-| `--color-border-focus` | `#4F46E5` | Input borders when focused |
+| `--brand-navy` | `#123b6d` | Dark brand color, secondary branding |
+| `--brand-primary` | `#1d4ed8` | Primary buttons, active states, links, main brand color |
+| `--brand-primary-hover` | `#1e40af` | Primary button hover, pressed states |
+| `--brand-primary-light` | `#eff6ff` | Light brand background, highlights |
+| `--status-success` | `#15803d` | OTP verified badges, success toasts, lock icons |
+| `--status-warning` | `#b45309` | Pending states, warnings |
+| `--status-danger` | `#b42318` | Errors, validation messages, destructive actions |
+| `--status-info` | `#0369a1` | Informational messages, hints |
+| `--surface-page` | `#f8fafc` | Page background (clean light tone) |
+| `--surface-card` | `#ffffff` | Cards, form containers, elevated elements |
+| `--surface-subtle` | `#f1f5f9` | Subtle backgrounds, disabled states |
+| `--text-primary` | `#0f172a` | All page/card headings |
+| `--text-secondary` | `#475569` | Default body text |
+| `--text-muted` | `#64748b` | Labels, helper text, placeholders |
+| `--border-default` | `#dbe3ec` | Default input borders, dividers |
+| `--border-strong` | `#cbd5e1` | Strong borders, prominent dividers |
 
 ## 3. Typography
 
@@ -47,8 +50,8 @@ We use **Inter** (Google Fonts) exclusively.
 ### Borrower Auth Pages (Phone Entry & OTP)
 - **Desktop:** Two-column split.
   - **Left panel (60%):** Deep indigo gradient background (`#1E1B4B` to `#312E81`). Features branding, trust badges, and marketing copy.
-  - **Right panel (40%):** Light background (`--color-bg`). Contains the auth card centered.
-- **Card Styling:** `background: var(--color-surface)`, `border-radius: 16px`, `box-shadow: 0 8px 32px rgba(79, 70, 229, 0.12)`.
+  - **Right panel (40%):** Light background (`--surface-page`). Contains the auth card centered.
+- **Card Styling:** `background: var(--surface-card)`, `border-radius: 16px`, `box-shadow: 0 8px 32px rgba(29, 78, 216, 0.12)`.
 - **Mobile:** Full-width layout. The marketing panel is hidden or minimized. Auth card goes edge-to-edge with 16px padding.
 
 ### Borrower Form Page (Loan Application)
@@ -56,7 +59,7 @@ We use **Inter** (Google Fonts) exclusively.
   - **Top Bar:** White, minimal, contains logo and breadcrumb.
   - **Stepper Bar:** Clean horizontal progress indicator below the top bar.
   - **Content Area:** A centered form card (max-width `720px`).
-- **Form Elements:** Inputs should be full-width within their grid columns. Labels above inputs. Clean `#E5E7EB` borders turning `#4F46E5` on focus.
+- **Form Elements:** Inputs should be full-width within their grid columns. Labels above inputs. Clean `#dbe3ec` borders turning `#1d4ed8` on focus.
 
 ## 5. PrimeReact & Lucide Integration
 
