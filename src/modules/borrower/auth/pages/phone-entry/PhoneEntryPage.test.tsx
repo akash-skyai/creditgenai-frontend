@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { PhoneEntryPage } from './PhoneEntryPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
 
 
 const queryClient = new QueryClient({
@@ -12,7 +13,9 @@ const queryClient = new QueryClient({
 const renderWithQueryClient = (ui: React.ReactElement) => {
   return render(
     <QueryClientProvider client={queryClient}>
-      {ui}
+      <MemoryRouter>
+        {ui}
+      </MemoryRouter>
     </QueryClientProvider>
   );
 };
