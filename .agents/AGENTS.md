@@ -10,7 +10,10 @@ Before making ANY change to this project — new file, new folder, new component
 2. [`docs/PROJECT_STRUCTURE.md`](../docs/PROJECT_STRUCTURE.md)
    — Confirmed decisions, borrower UI flow, folder structure, naming conventions, module rules.
 
-If you have not read both files, stop and read them before proceeding.
+3. [`docs/DESIGN_SYSTEM.md`](../docs/DESIGN_SYSTEM.md)
+   — The official color palette, typography, and layout rules for the premium UI. Always use its CSS variables.
+
+If you have not read all three files, stop and read them before proceeding.
 
 ---
 
