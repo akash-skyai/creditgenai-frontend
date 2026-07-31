@@ -1,0 +1,25 @@
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  width: 100%;
+}
+
+.formCard {
+  background-color: var(--surface-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 720px;
+  overflow: hidden;
+}
+
+.stepper {
+  padding: var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--border-default);
+  background-color: var(--surface-subtle);
+}
+
+.stepContent {
+  /* Let inner components handle their own padding */
+}

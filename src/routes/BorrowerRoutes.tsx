@@ -5,6 +5,7 @@ import { BorrowerLayout } from '@/modules/borrower/layouts/borrower-layout/Borro
 // Lazy load the pages
 const PhoneEntryPage = lazy(() => import('@/modules/borrower/auth/pages/phone-entry/PhoneEntryPage').then(m => ({ default: m.PhoneEntryPage })));
 const OtpVerifyPage = lazy(() => import('@/modules/borrower/auth/pages/otp-verify/OtpVerifyPage').then(m => ({ default: m.OtpVerifyPage })));
+const LoanApplicationPage = lazy(() => import('@/modules/borrower/loan-application/pages/LoanApplicationPage/LoanApplicationPage').then(m => ({ default: m.LoanApplicationPage })));
 
 // A simple fallback until we build the real PageLoader
 const Loader = () => <div>Loading...</div>;
@@ -32,7 +33,14 @@ export default function BorrowerRoutes() {
           } 
         />
         
-        {/* We will add LoanApplicationPage here later */}
+        <Route 
+          path="form" 
+          element={
+            <Suspense fallback={<Loader />}>
+              <LoanApplicationPage />
+            </Suspense>
+          } 
+        />
       </Route>
     </Routes>
   );

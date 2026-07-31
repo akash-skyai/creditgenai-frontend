@@ -1,0 +1,43 @@
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.stepSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+.lockIcon {
+  color: var(--status-success);
+}
+
+.loadingText {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--status-info);
+  margin-top: var(--space-1);
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-default);
+}
+
+.nextButton {
+  min-width: 140px;
+}
