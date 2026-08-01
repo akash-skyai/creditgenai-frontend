@@ -148,79 +148,32 @@ LP creates a referral link  →  /apply  OR  /apply/:trackingId
 src/
 │
 ├── modules/
-│   └── borrower/                        ← the only module being built now
-│       ├── auth/
+│   └── borrower/                        ← the module being built
+│       ├── [feature-slice-name]/        ← e.g. auth, loan-application
 │       │   ├── pages/
-│       │   │   ├── PhoneEntryPage/
-│       │   │   │   ├── PhoneEntryPage.tsx
-│       │   │   │   ├── PhoneEntryPage.module.scss
-│       │   │   │   └── PhoneEntryPage.test.tsx
-│       │   │   └── OtpVerifyPage/
-│       │   │       ├── OtpVerifyPage.tsx
-│       │   │       ├── OtpVerifyPage.module.scss
-│       │   │       └── OtpVerifyPage.test.tsx
+│       │   │   └── [kebab-case-page]/   ← e.g. phone-entry
+│       │   │       ├── [PascalCasePage].tsx
+│       │   │       ├── [PascalCasePage].module.scss
+│       │   │       └── [PascalCasePage].test.tsx
 │       │   ├── components/
-│       │   │   ├── PhoneForm/
-│       │   │   │   ├── PhoneForm.tsx
-│       │   │   │   ├── PhoneForm.module.scss
-│       │   │   │   └── PhoneForm.test.tsx
-│       │   │   └── OtpForm/
-│       │   │       ├── OtpForm.tsx
-│       │   │       ├── OtpForm.module.scss
-│       │   │       └── OtpForm.test.tsx
+│       │   │   └── [kebab-case-component]/ ← e.g. otp-form
+│       │   │       ├── [PascalCaseComponent].tsx
+│       │   │       ├── [PascalCaseComponent].module.scss
+│       │   │       └── [PascalCaseComponent].test.tsx
 │       │   ├── hooks/
-│       │   │   ├── useSendOtp.ts
-│       │   │   └── useVerifyOtp.ts
+│       │   │   └── [camelCaseHook].ts   ← e.g. useSendOtp.ts
 │       │   ├── services/
-│       │   │   └── otpAuth.service.ts
+│       │   │   └── [kebab-case].service.ts ← e.g. otp-auth.service.ts
 │       │   ├── schemas/
-│       │   │   ├── phone.schema.ts
-│       │   │   └── otp.schema.ts
+│       │   │   └── [kebab-case].schema.ts  ← e.g. phone.schema.ts
 │       │   └── types/
-│       │       └── auth.types.ts
+│       │       └── [kebab-case].types.ts   ← e.g. auth.types.ts
 │       │
-│       ├── layouts/
-│       │   └── BorrowerLayout/
-│       │       ├── BorrowerLayout.tsx
-│       │       ├── BorrowerLayout.module.scss
-│       │       └── BorrowerLayout.test.tsx
-│       │
-│       └── loan-application/
-│           ├── pages/
-│           │   └── LoanApplicationPage/
-│           │       ├── LoanApplicationPage.tsx
-│           │       ├── LoanApplicationPage.module.scss
-│           │       └── LoanApplicationPage.test.tsx
-│           ├── components/
-│           │   ├── PersonalInfoStep/
-│           │   │   ├── PersonalInfoStep.tsx
-│           │   │   ├── PersonalInfoStep.module.scss
-│           │   │   └── PersonalInfoStep.test.tsx
-│           │   ├── EmploymentLoanStep/
-│           │   │   ├── EmploymentLoanStep.tsx
-│           │   │   ├── EmploymentLoanStep.module.scss
-│           │   │   └── EmploymentLoanStep.test.tsx
-│           │   ├── ReviewStep/
-│           │   │   ├── ReviewStep.tsx
-│           │   │   ├── ReviewStep.module.scss
-│           │   │   └── ReviewStep.test.tsx
-│           │   ├── SuccessScreen/
-│           │   │   ├── SuccessScreen.tsx
-│           │   │   ├── SuccessScreen.module.scss
-│           │   │   └── SuccessScreen.test.tsx
-│           │   └── ReturningUserModal/
-│           │       ├── ReturningUserModal.tsx
-│           │       ├── ReturningUserModal.module.scss
-│           │       └── ReturningUserModal.test.tsx
-│           ├── hooks/
-│           │   └── useSubmitApplication.ts
-│           ├── services/
-│           │   └── loanApplication.service.ts
-│           ├── schemas/
-│           │   ├── personalInfo.schema.ts
-│           │   └── employmentLoan.schema.ts
-│           └── types/
-│               └── loanApplication.types.ts
+│       └── layouts/                     ← Layouts specific to this module
+│           └── [kebab-case-layout]/     ← e.g. borrower-auth-layout
+│               ├── [PascalCaseLayout].tsx
+│               ├── [PascalCaseLayout].module.scss
+│               └── [PascalCaseLayout].test.tsx
 │
 ├── shared/
 │   ├── components/                     ← only components confirmed used by 2+ modules

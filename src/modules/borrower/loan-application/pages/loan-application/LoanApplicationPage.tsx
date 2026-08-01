@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Stepper, Step, StepLabel, Box } from '@mui/material';
-import { PersonalInfoStep } from '../../components/PersonalInfoStep/PersonalInfoStep';
+import { Box, Stepper, Step, StepLabel } from '@mui/material';
+import { PersonalInfoStep } from '../../components/personal-info-step/PersonalInfoStep';
+import { SuccessScreen } from '../../components/success-screen/SuccessScreen';
 import { personalInfoSchema } from '../../schemas/personalInfo.schema';
 import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
 import styles from './LoanApplicationPage.module.scss';
-import { SuccessScreen } from '../../components/SuccessScreen/SuccessScreen';
 
 const DRAFT_STORAGE_KEY = 'loan_application_draft';
 

@@ -1,7 +1,6 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import { 
   TextField, 
-  MenuItem, 
   Grid, 
   InputAdornment,
   Button
@@ -95,6 +94,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="Mobile Number"
             disabled
             value="9876543210" // TODO: Read from actual auth context/state
+            className={styles.readonlyField}
             slotProps={{
               input: {
                 startAdornment: <InputAdornment position="start">+91</InputAdornment>,
@@ -125,18 +125,24 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             name="gender"
             control={control}
             render={({ field }) => (
-              <TextField
-                {...field}
-                select
-                fullWidth
-                label="Gender"
-                error={!!errors.gender}
-                helperText={errors.gender?.message}
-              >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </TextField>
+              <div className={styles.genderField}>
+                <span className={`${styles.genderLabel} ${errors.gender ? styles.errorText : ''}`}>
+                  Gender
+                </span>
+                <div className={styles.pillGroup}>
+                  {['male', 'female', 'other'].map((g) => (
+                    <button
+                      key={g}
+                      type="button"
+                      className={`${styles.pillButton} ${field.value === g ? styles.pillActive : ''}`}
+                      onClick={() => field.onChange(g)}
+                    >
+                      {g.charAt(0).toUpperCase() + g.slice(1)}
+                    </button>
+                  ))}
+                </div>
+                {errors.gender && <span className={styles.errorHelperText}>{errors.gender.message}</span>}
+              </div>
             )}
           />
         </Grid>
@@ -188,9 +194,19 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             fullWidth
             label="City"
             disabled
+            className={styles.readonlyField}
             error={!!errors.city}
             helperText={errors.city?.message}
-            slotProps={{ inputLabel: { shrink: !!watch('city') } }}
+            slotProps={{ 
+              inputLabel: { shrink: !!watch('city') },
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Lock size={18} className={styles.lockIcon} />
+                  </InputAdornment>
+                ),
+              }
+            }}
             {...register('city')}
           />
         </Grid>
@@ -200,9 +216,19 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             fullWidth
             label="State"
             disabled
+            className={styles.readonlyField}
             error={!!errors.state}
             helperText={errors.state?.message}
-            slotProps={{ inputLabel: { shrink: !!watch('state') } }}
+            slotProps={{ 
+              inputLabel: { shrink: !!watch('state') },
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Lock size={18} className={styles.lockIcon} />
+                  </InputAdornment>
+                ),
+              }
+            }}
             {...register('state')}
           />
         </Grid>
@@ -216,7 +242,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
           onClick={handleNext}
           className={styles.nextButton}
         >
-          Next &rarr;
+          Next Step &rarr;
         </Button>
       </div>
     </div>
