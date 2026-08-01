@@ -1,4 +1,5 @@
 import { useFormContext, Controller } from 'react-hook-form';
+import { NumericFormat } from 'react-number-format';
 import { 
   TextField, 
   Grid, 
@@ -31,7 +32,6 @@ const LOAN_PURPOSES = [
 export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) {
   const { 
     control, 
-    register, 
     formState: { errors }, 
     trigger
   } = useFormContext<LoanApplicationFormData>();
@@ -67,11 +67,13 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 <span className={`${styles.pillLabel} ${errors.employmentType ? styles.errorText : ''}`}>
                   Employment Type
                 </span>
-                <div className={styles.pillGroup}>
+                <div className={styles.pillGroup} role="radiogroup" aria-label="Employment Type">
                   {['salaried', 'self-employed'].map((type) => (
                     <button
                       key={type}
                       type="button"
+                      role="radio"
+                      aria-checked={field.value === type}
                       className={`${styles.pillButton} ${field.value === type ? styles.pillActive : ''}`}
                       onClick={() => field.onChange(type)}
                     >
@@ -89,39 +91,61 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
 
         {/* Average Monthly Income / Revenue */}
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="Average Monthly Income / Revenue"
-            placeholder="e.g. 50000"
-            type="number"
-            error={!!errors.monthlyIncome}
-            helperText={errors.monthlyIncome?.message || ' '}
-            slotProps={{
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
-              input: {
-                startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-              }
-            }}
-            {...register('monthlyIncome', { valueAsNumber: true })}
+          <Controller
+            name="monthlyIncome"
+            control={control}
+            render={({ field }) => (
+              <NumericFormat
+                {...field}
+                customInput={TextField}
+                fullWidth
+                label="Average Monthly Income / Revenue"
+                placeholder="e.g. 50,000"
+                error={!!errors.monthlyIncome}
+                helperText={errors.monthlyIncome?.message}
+                thousandSeparator=","
+                valueIsNumericString
+                onValueChange={(values) => {
+                  field.onChange(values.floatValue);
+                }}
+                slotProps={{
+                  formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                  input: {
+                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                  }
+                }}
+              />
+            )}
           />
         </Grid>
 
         {/* Required Loan Amount */}
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="Desired Loan Amount"
-            placeholder="e.g. 200000"
-            type="number"
-            error={!!errors.loanAmount}
-            helperText={errors.loanAmount?.message || ' '}
-            slotProps={{
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
-              input: {
-                startAdornment: <InputAdornment position="start">₹</InputAdornment>,
-              }
-            }}
-            {...register('loanAmount', { valueAsNumber: true })}
+          <Controller
+            name="loanAmount"
+            control={control}
+            render={({ field }) => (
+              <NumericFormat
+                {...field}
+                customInput={TextField}
+                fullWidth
+                label="Desired Loan Amount"
+                placeholder="e.g. 2,00,000"
+                error={!!errors.loanAmount}
+                helperText={errors.loanAmount?.message}
+                thousandSeparator=","
+                valueIsNumericString
+                onValueChange={(values) => {
+                  field.onChange(values.floatValue);
+                }}
+                slotProps={{
+                  formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                  input: {
+                    startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                  }
+                }}
+              />
+            )}
           />
         </Grid>
 
@@ -147,7 +171,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
               )}
             />
             <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-              {errors.loanPurpose?.message || ' '}
+              {errors.loanPurpose?.message}
             </FormHelperText>
           </FormControl>
         </Grid>

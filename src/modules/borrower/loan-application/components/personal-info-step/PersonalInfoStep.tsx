@@ -7,6 +7,8 @@ import {
   Skeleton
 } from '@mui/material';
 import { Lock } from 'lucide-react';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
 import { usePinCode } from '../../hooks/usePinCode';
@@ -16,7 +18,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
   const { 
     control, 
     register, 
-    formState: { errors }, 
+    formState: { errors, isSubmitting }, 
     watch, 
     setValue,
     trigger
@@ -72,8 +74,8 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="First Name"
             placeholder="e.g. Rahul"
             error={!!errors.firstName}
-            helperText={errors.firstName?.message || ' '}
-            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+            helperText={errors.firstName?.message}
+            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('firstName')}
           />
         </Grid>
@@ -84,8 +86,8 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="Middle Name"
             placeholder="Optional"
             error={!!errors.middleName}
-            helperText={errors.middleName?.message || ' '}
-            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+            helperText={errors.middleName?.message}
+            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('middleName')}
           />
         </Grid>
@@ -96,8 +98,8 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="Last Name"
             placeholder="e.g. Sharma"
             error={!!errors.lastName}
-            helperText={errors.lastName?.message || ' '}
-            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+            helperText={errors.lastName?.message}
+            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('lastName')}
           />
         </Grid>
@@ -110,9 +112,8 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             disabled
             value="9876543210" // TODO: Read from actual auth context/state
             className={styles.readonlyField}
-            helperText=" "
             slotProps={{
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+              formHelperText: { className: styles.helperTextSpacer },
               input: {
                 startAdornment: <InputAdornment position="start">+91</InputAdornment>,
                 endAdornment: (
@@ -132,8 +133,8 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             placeholder="rahul@example.com"
             type="email"
             error={!!errors.email}
-            helperText={errors.email?.message || ' '}
-            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+            helperText={errors.email?.message}
+            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('email')}
           />
         </Grid>
@@ -147,11 +148,13 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
                 <span className={`${styles.genderLabel} ${errors.gender ? styles.errorText : ''}`}>
                   Gender
                 </span>
-                <div className={styles.pillGroup}>
+                <div className={styles.pillGroup} role="radiogroup" aria-label="Gender">
                   {['male', 'female', 'other'].map((g) => (
                     <button
                       key={g}
                       type="button"
+                      role="radio"
+                      aria-checked={field.value === g}
                       className={`${styles.pillButton} ${field.value === g ? styles.pillActive : ''}`}
                       onClick={() => field.onChange(g)}
                     >
@@ -168,17 +171,26 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="Date of Birth"
-            type="date"
-            error={!!errors.dateOfBirth}
-            helperText={errors.dateOfBirth?.message || ' '}
-            slotProps={{ 
-              inputLabel: { shrink: true },
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } }
-            }}
-            {...register('dateOfBirth')}
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                label="Date of Birth"
+                value={field.value ? dayjs(field.value) : null}
+                onChange={(newValue) => {
+                  field.onChange(newValue ? newValue.format('YYYY-MM-DD') : '');
+                }}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    error: !!errors.dateOfBirth,
+                    helperText: errors.dateOfBirth?.message,
+                    slotProps: { formHelperText: { className: styles.helperTextSpacer } }
+                  }
+                }}
+              />
+            )}
           />
         </Grid>
 
@@ -188,10 +200,10 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="PAN Number"
             placeholder="ABCDE1234F"
             error={!!errors.panNumber}
-            helperText={errors.panNumber?.message || ' '}
+            helperText={errors.panNumber?.message}
             slotProps={{ 
               htmlInput: { style: { textTransform: 'uppercase' } },
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } }
+              formHelperText: { className: styles.helperTextSpacer }
             }}
             {...register('panNumber', {
               onChange: (e) => {
@@ -208,10 +220,10 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="PIN Code"
             placeholder="e.g. 400001"
             error={!!errors.pinCode || !!postalError}
-            helperText={errors.pinCode?.message || postalError?.message || ' '}
+            helperText={errors.pinCode?.message || postalError?.message}
             slotProps={{ 
               htmlInput: { maxLength: 6 },
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } }
+              formHelperText: { className: styles.helperTextSpacer }
             }}
             {...register('pinCode')}
           />
@@ -219,9 +231,9 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
 
         <Grid size={{ xs: 12, sm: 6 }}>
           {isPostalLoading ? (
-            <div style={{ paddingTop: 4 }}>
-              <Skeleton variant="rectangular" height={56} style={{ borderRadius: 10 }} animation="wave" />
-              <div style={{ minHeight: 20, marginTop: 4 }} />
+            <div className={styles.skeletonWrapper}>
+              <Skeleton variant="rectangular" height={56} className={styles.skeletonCard} animation="wave" />
+              <div className={styles.helperTextSpacer} />
             </div>
           ) : (
             <TextField
@@ -230,10 +242,10 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
               disabled
               className={styles.readonlyField}
               error={!!errors.city}
-              helperText={errors.city?.message || ' '}
+              helperText={errors.city?.message}
               slotProps={{ 
                 inputLabel: { shrink: !!watch('city') },
-                formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                formHelperText: { className: styles.helperTextSpacer },
                 input: {
                   endAdornment: (
                     <InputAdornment position="end">
@@ -249,9 +261,9 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
 
         <Grid size={{ xs: 12, sm: 6 }}>
           {isPostalLoading ? (
-            <div style={{ paddingTop: 4 }}>
-              <Skeleton variant="rectangular" height={56} style={{ borderRadius: 10 }} animation="wave" />
-              <div style={{ minHeight: 20, marginTop: 4 }} />
+            <div className={styles.skeletonWrapper}>
+              <Skeleton variant="rectangular" height={56} className={styles.skeletonCard} animation="wave" />
+              <div className={styles.helperTextSpacer} />
             </div>
           ) : (
             <TextField
@@ -260,10 +272,10 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
               disabled
               className={styles.readonlyField}
               error={!!errors.state}
-              helperText={errors.state?.message || ' '}
+              helperText={errors.state?.message}
               slotProps={{ 
                 inputLabel: { shrink: !!watch('state') },
-                formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                formHelperText: { className: styles.helperTextSpacer },
                 input: {
                   endAdornment: (
                     <InputAdornment position="end">
@@ -285,6 +297,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
           size="large"
           onClick={handleNext}
           className={styles.nextButton}
+          disabled={isPostalLoading || isSubmitting}
         >
           Next Step &rarr;
         </Button>

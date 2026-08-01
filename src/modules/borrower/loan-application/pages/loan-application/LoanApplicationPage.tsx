@@ -21,7 +21,7 @@ export function LoanApplicationPage() {
   // Setup React Hook Form
   const methods = useForm<LoanApplicationFormData>({
     resolver: zodResolver(loanApplicationSchema),
-    mode: 'onTouched', // Validate on touch
+    mode: 'onSubmit', // Validate on submit, re-validate on change
     defaultValues: {
       firstName: '',
       middleName: '',
@@ -33,8 +33,8 @@ export function LoanApplicationPage() {
       city: '',
       state: '',
       employmentType: 'salaried',
-      monthlyIncome: '' as any,
-      loanAmount: '' as any,
+      monthlyIncome: '' as unknown as number,
+      loanAmount: '' as unknown as number,
       loanPurpose: '',
     }
   });

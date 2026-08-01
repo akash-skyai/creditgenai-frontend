@@ -111,3 +111,18 @@
     }
   }
 }
+
+/* Helper text spacer to prevent layout shift */
+.helperTextSpacer {
+  min-height: 20px;
+  margin-top: 4px;
+}
+
+/* Skeleton Loading styles */
+.skeletonWrapper {
+  padding-top: 4px;
+}
+
+.skeletonCard {
+  border-radius: 10px;
+}
