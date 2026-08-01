@@ -14,10 +14,56 @@
   overflow: hidden;
 }
 
-.stepper {
-  padding: var(--space-6) var(--space-4);
+.stepperWrapper {
+  padding: var(--space-8) var(--space-4) var(--space-6) !important;
   border-bottom: 1px solid var(--border-default);
   background-color: var(--surface-subtle);
+
+  /* Target MUI Stepper Internals */
+  :global(.MuiStepIcon-root) {
+    width: 32px;
+    height: 32px;
+    color: var(--border-control); /* Inactive color */
+    transition: color 0.3s ease;
+  }
+  
+  :global(.MuiStepIcon-root.Mui-active),
+  :global(.MuiStepIcon-root.Mui-completed) {
+    color: var(--brand-primary);
+  }
+
+  :global(.MuiStepIcon-text) {
+    font-size: 14px;
+    font-weight: 600;
+    fill: #ffffff;
+  }
+
+  :global(.MuiStepLabel-label) {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-top: 12px;
+    transition: all 0.3s ease;
+  }
+
+  :global(.MuiStepLabel-label.Mui-active) {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: var(--font-size-base); /* Slightly larger for active */
+  }
+
+  :global(.MuiStepConnector-line) {
+    border-color: var(--border-default);
+    border-width: 2px;
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--space-6) var(--space-3) var(--space-4) !important;
+    
+    :global(.MuiStepIcon-root) {
+      width: 28px;
+      height: 28px;
+    }
+  }
 }
 
 .stepContent {

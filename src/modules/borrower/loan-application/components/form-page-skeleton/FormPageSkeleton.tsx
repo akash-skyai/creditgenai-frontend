@@ -9,15 +9,15 @@ export const FormPageSkeleton: React.FC = () => {
     <div className={pageStyles.pageContainer} data-testid="form-page-skeleton">
       <div className={pageStyles.formCard}>
         {/* Stepper Skeleton (mimics real stepper padding and border) */}
-        <div className={pageStyles.stepper}>
+        <div className={pageStyles.stepperWrapper}>
           <div className={styles.stepperSkeletonFlex}>
-             <Skeleton variant="circular" width={24} height={24} animation="wave" />
+             <Skeleton variant="circular" width={32} height={32} animation="wave" />
              <Skeleton variant="text" width={100} height={20} animation="wave" />
              <div className={styles.stepperLine} />
-             <Skeleton variant="circular" width={24} height={24} animation="wave" />
+             <Skeleton variant="circular" width={32} height={32} animation="wave" />
              <Skeleton variant="text" width={140} height={20} animation="wave" />
              <div className={styles.stepperLine} />
-             <Skeleton variant="circular" width={24} height={24} animation="wave" />
+             <Skeleton variant="circular" width={32} height={32} animation="wave" />
              <Skeleton variant="text" width={80} height={20} animation="wave" />
           </div>
         </div>

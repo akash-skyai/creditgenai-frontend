@@ -90,13 +90,15 @@ export function LoanApplicationPage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.formCard}>
-        <Stepper activeStep={activeStep} alternativeLabel className={styles.stepper}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        <div className={styles.stepperWrapper}>
+          <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </div>
 
         <FormProvider {...methods}>
           <Box className={styles.stepContent}>
