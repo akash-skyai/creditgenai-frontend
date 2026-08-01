@@ -40,7 +40,18 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
   }, [postalData, postalError, setValue]);
 
   const handleNext = async () => {
-    const isStepValid = await trigger();
+    const isStepValid = await trigger([
+      'firstName',
+      'middleName',
+      'lastName',
+      'email',
+      'gender',
+      'dateOfBirth',
+      'panNumber',
+      'pinCode',
+      'city',
+      'state'
+    ]);
     if (isStepValid) {
       onNext();
     }

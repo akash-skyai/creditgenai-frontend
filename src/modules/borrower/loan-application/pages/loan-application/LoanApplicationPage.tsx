@@ -4,8 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Stepper, Step, StepLabel } from '@mui/material';
 import { PersonalInfoStep } from '../../components/personal-info-step/PersonalInfoStep';
 import { SuccessScreen } from '../../components/success-screen/SuccessScreen';
-import { personalInfoSchema } from '../../schemas/personalInfo.schema';
-import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
+import { loanApplicationSchema } from '../../schemas/loanApplication.schema';
+import type { LoanApplicationFormData } from '../../schemas/loanApplication.schema';
+import { EmploymentLoanStep } from '../../components/employment-loan-step/EmploymentLoanStep';
 import styles from './LoanApplicationPage.module.scss';
 
 const DRAFT_STORAGE_KEY = 'loan_application_draft';
@@ -18,8 +19,8 @@ export function LoanApplicationPage() {
   const [referenceId, setReferenceId] = useState('');
 
   // Setup React Hook Form
-  const methods = useForm<PersonalInfoFormData>({
-    resolver: zodResolver(personalInfoSchema),
+  const methods = useForm<LoanApplicationFormData>({
+    resolver: zodResolver(loanApplicationSchema),
     mode: 'onTouched', // Validate on touch
     defaultValues: {
       firstName: '',
@@ -31,6 +32,10 @@ export function LoanApplicationPage() {
       pinCode: '',
       city: '',
       state: '',
+      employmentType: 'salaried',
+      monthlyIncome: '' as any,
+      loanAmount: '' as any,
+      loanPurpose: '',
     }
   });
 
@@ -96,16 +101,7 @@ export function LoanApplicationPage() {
         <FormProvider {...methods}>
           <Box className={styles.stepContent}>
             {activeStep === 0 && <PersonalInfoStep onNext={handleNext} />}
-            {activeStep === 1 && (
-              <div style={{ padding: '24px', textAlign: 'center' }}>
-                <h2>Employment & Loan Details</h2>
-                <p>Coming in next phase...</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
-                  <button onClick={handleBack}>Back</button>
-                  <button onClick={handleNext}>Next (Mock)</button>
-                </div>
-              </div>
-            )}
+            {activeStep === 1 && <EmploymentLoanStep onNext={handleNext} onBack={handleBack} />}
             {activeStep === 2 && (
               <div style={{ padding: '24px', textAlign: 'center' }}>
                 <h2>Review & Submit</h2>

@@ -1,0 +1,88 @@
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.stepSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-default);
+}
+
+.navButton {
+  min-width: 120px;
+}
+
+/* Pill Group Styles */
+.pillField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pillLabel {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.pillGroup {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.pillButton {
+  flex: 1;
+  padding: 12px;
+  background-color: var(--surface-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+
+  &:hover {
+    background-color: #e2e8f0;
+  }
+}
+
+.pillActive {
+  background-color: var(--brand-primary-light);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  font-weight: 500;
+
+  &:hover {
+    background-color: var(--brand-primary-light);
+  }
+}
+
+.errorText {
+  color: var(--status-danger);
+}
+
+.errorHelperText {
+  font-size: var(--font-size-xs);
+  color: var(--status-danger);
+  margin-top: 4px;
+}
