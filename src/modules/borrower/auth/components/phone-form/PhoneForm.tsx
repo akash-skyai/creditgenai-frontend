@@ -23,10 +23,10 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
   });
 
   return (
-    <div className={styles.card}>
+    <div className={styles.formContent}>
       <div className={styles.header}>
         <div className={styles.iconWrapper}>
-          <Lock size={24} className={styles.lockIcon} />
+          <Lock size={22} className={styles.lockIcon} />
         </div>
         <h2 className={styles.title}>Enter Your Mobile Number</h2>
         <p className={styles.subtitle}>
@@ -35,7 +35,7 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <div className={styles.inputGroup}>
+        <div className={`${styles.inputGroup} ${errors.mobileNumber ? styles.inputGroupError : ''}`}>
           <span className={styles.prefix}>+91</span>
           <Controller
             name="mobileNumber"
@@ -44,16 +44,18 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
               <InputBase
                 id="mobileNumber"
                 {...field}
-                className={`${styles.input} ${errors.mobileNumber ? styles.inputError : ''}`}
+                className={styles.input}
                 placeholder="98765 43210"
                 inputProps={{ maxLength: 10, inputMode: 'numeric', pattern: '[0-9]*' }}
               />
             )}
           />
         </div>
-        {errors.mobileNumber && (
-          <small className={styles.errorText}>{errors.mobileNumber.message}</small>
-        )}
+        <div className={styles.errorSlot}>
+          {errors.mobileNumber && (
+            <small className={styles.errorText}>{errors.mobileNumber.message}</small>
+          )}
+        </div>
 
         <Button
           type="submit"
@@ -62,7 +64,7 @@ export const PhoneForm: React.FC<PhoneFormProps> = ({ onSubmit, isLoading = fals
           className={styles.submitBtn}
           disabled={!isValid || isLoading}
         >
-          {isLoading ? 'Sending...' : 'Send OTP →'}
+          {isLoading ? 'Sending OTP...' : 'Send OTP →'}
         </Button>
       </form>
 

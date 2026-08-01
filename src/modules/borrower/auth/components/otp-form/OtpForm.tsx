@@ -79,7 +79,7 @@ export const OtpForm: React.FC<OtpFormProps> = ({ mobileNumber, onSubmit, onRese
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.formContent}>
       <div className={styles.header}>
         <div className={styles.iconWrapper}>
           <ShieldCheck size={24} className={styles.shieldIcon} />
@@ -87,7 +87,7 @@ export const OtpForm: React.FC<OtpFormProps> = ({ mobileNumber, onSubmit, onRese
         <h2 className={styles.title}>Verify your number</h2>
         <p className={styles.subtitle}>
           Enter the 6-digit OTP sent to <br />
-          <strong>+91 {mobileNumber.slice(0, 2)}••••{mobileNumber.slice(-4)}</strong>
+          <strong>+91 {mobileNumber ? `${mobileNumber.slice(0, 2)}••••${mobileNumber.slice(-4)}` : 'XXXXXX7890'}</strong>
         </p>
       </div>
 
@@ -116,9 +116,11 @@ export const OtpForm: React.FC<OtpFormProps> = ({ mobileNumber, onSubmit, onRese
             </div>
           )}
         />
-        {errors.otpCode && (
-          <small className={styles.errorText}>{errors.otpCode.message}</small>
-        )}
+        <div className={styles.errorSlot}>
+          {errors.otpCode && (
+            <small className={styles.errorText}>{errors.otpCode.message}</small>
+          )}
+        </div>
 
         <div className={styles.resendWrapper}>
           <span className={styles.timerText}>

@@ -94,13 +94,14 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
             label="Average Monthly Income / Revenue"
             placeholder="e.g. 50000"
             type="number"
+            error={!!errors.monthlyIncome}
+            helperText={errors.monthlyIncome?.message || ' '}
             slotProps={{
+              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
               input: {
                 startAdornment: <InputAdornment position="start">₹</InputAdornment>,
               }
             }}
-            error={!!errors.monthlyIncome}
-            helperText={errors.monthlyIncome?.message}
             {...register('monthlyIncome', { valueAsNumber: true })}
           />
         </Grid>
@@ -112,13 +113,14 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
             label="Desired Loan Amount"
             placeholder="e.g. 200000"
             type="number"
+            error={!!errors.loanAmount}
+            helperText={errors.loanAmount?.message || ' '}
             slotProps={{
+              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
               input: {
                 startAdornment: <InputAdornment position="start">₹</InputAdornment>,
               }
             }}
-            error={!!errors.loanAmount}
-            helperText={errors.loanAmount?.message}
             {...register('loanAmount', { valueAsNumber: true })}
           />
         </Grid>
@@ -144,7 +146,9 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 </Select>
               )}
             />
-            {errors.loanPurpose && <FormHelperText>{errors.loanPurpose.message}</FormHelperText>}
+            <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
+              {errors.loanPurpose?.message || ' '}
+            </FormHelperText>
           </FormControl>
         </Grid>
       </Grid>
