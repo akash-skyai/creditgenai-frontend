@@ -1,12 +1,12 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { 
-  TextField, 
-  Grid, 
+import {
+  TextField,
+  Grid,
   InputAdornment,
   Button,
-  Skeleton
+  CircularProgress
 } from '@mui/material';
-import { Lock } from 'lucide-react';
+import { Lock, CheckCircle2 } from 'lucide-react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
@@ -15,17 +15,17 @@ import { usePinCode } from '../../hooks/usePinCode';
 import styles from './PersonalInfoStep.module.scss';
 
 export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
-  const { 
-    control, 
-    register, 
-    formState: { errors, isSubmitting }, 
-    watch, 
+  const {
+    control,
+    register,
+    formState: { errors, isSubmitting },
+    watch,
     setValue,
     trigger
   } = useFormContext<PersonalInfoFormData>();
 
   const pinCode = watch('pinCode');
-  
+
   const { data: postalData, isLoading: isPostalLoading, error: postalError } = usePinCode(pinCode || '');
 
   // Auto-fill City and State when valid postal data is fetched
@@ -79,7 +79,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             {...register('firstName')}
           />
         </Grid>
-        
+
         <Grid size={{ xs: 12, sm: 4 }}>
           <TextField
             fullWidth
@@ -91,7 +91,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             {...register('middleName')}
           />
         </Grid>
-        
+
         <Grid size={{ xs: 12, sm: 4 }}>
           <TextField
             fullWidth
@@ -201,7 +201,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             placeholder="ABCDE1234F"
             error={!!errors.panNumber}
             helperText={errors.panNumber?.message}
-            slotProps={{ 
+            slotProps={{
               htmlInput: { style: { textTransform: 'uppercase' } },
               formHelperText: { className: styles.helperTextSpacer }
             }}
@@ -221,7 +221,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             placeholder="e.g. 400001"
             error={!!errors.pinCode || !!postalError}
             helperText={errors.pinCode?.message || postalError?.message}
-            slotProps={{ 
+            slotProps={{
               htmlInput: { maxLength: 6 },
               formHelperText: { className: styles.helperTextSpacer }
             }}
@@ -230,70 +230,66 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          {isPostalLoading ? (
-            <div className={styles.skeletonWrapper}>
-              <Skeleton variant="rectangular" height={56} className={styles.skeletonCard} animation="wave" />
-              <div className={styles.helperTextSpacer} />
-            </div>
-          ) : (
-            <TextField
-              fullWidth
-              label="City"
-              disabled
-              className={styles.readonlyField}
-              error={!!errors.city}
-              helperText={errors.city?.message}
-              slotProps={{ 
-                inputLabel: { shrink: !!watch('city') },
-                formHelperText: { className: styles.helperTextSpacer },
-                input: {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Lock size={18} className={styles.lockIcon} />
-                    </InputAdornment>
-                  ),
-                }
-              }}
-              {...register('city')}
-            />
-          )}
+          <TextField
+            fullWidth
+            label="City"
+            error={!!errors.city}
+            helperText={errors.city?.message}
+            slotProps={{
+              inputLabel: { shrink: !!watch('city') || isPostalLoading },
+              formHelperText: { className: styles.helperTextSpacer },
+              input: {
+                endAdornment: isPostalLoading ? (
+                  <InputAdornment position="end">
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                ) : (postalData && watch('city') === postalData.city) ? (
+                  <InputAdornment position="end">
+                    <CheckCircle2 size={18} className={styles.successIcon} />
+                  </InputAdornment>
+                ) : null,
+              }
+            }}
+            {...register('city')}
+          />
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          {isPostalLoading ? (
-            <div className={styles.skeletonWrapper}>
-              <Skeleton variant="rectangular" height={56} className={styles.skeletonCard} animation="wave" />
-              <div className={styles.helperTextSpacer} />
-            </div>
-          ) : (
-            <TextField
-              fullWidth
-              label="State"
-              disabled
-              className={styles.readonlyField}
-              error={!!errors.state}
-              helperText={errors.state?.message}
-              slotProps={{ 
-                inputLabel: { shrink: !!watch('state') },
-                formHelperText: { className: styles.helperTextSpacer },
-                input: {
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Lock size={18} className={styles.lockIcon} />
-                    </InputAdornment>
-                  ),
-                }
-              }}
-              {...register('state')}
-            />
-          )}
+          <TextField
+            fullWidth
+            label="State"
+            disabled
+            className={styles.readonlyField}
+            error={!!errors.state}
+            helperText={errors.state?.message}
+            slotProps={{
+              inputLabel: { shrink: !!watch('state') || isPostalLoading },
+              formHelperText: { className: styles.helperTextSpacer },
+              input: {
+                endAdornment: isPostalLoading ? (
+                  <InputAdornment position="end">
+                    <CircularProgress size={20} />
+                  </InputAdornment>
+                ) : postalData ? (
+                  <InputAdornment position="end">
+                    <CheckCircle2 size={18} className={styles.successIcon} />
+                  </InputAdornment>
+                ) : (
+                  <InputAdornment position="end">
+                    <Lock size={18} className={styles.lockIcon} />
+                  </InputAdornment>
+                ),
+              }
+            }}
+            {...register('state')}
+          />
         </Grid>
       </Grid>
 
       <div className={styles.actionContainer}>
-        <Button 
-          variant="contained" 
-          color="primary" 
+        <Button
+          variant="contained"
+          color="primary"
           size="large"
           onClick={handleNext}
           className={styles.nextButton}
