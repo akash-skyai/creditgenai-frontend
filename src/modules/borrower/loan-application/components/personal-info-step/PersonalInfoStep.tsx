@@ -3,7 +3,8 @@ import {
   TextField, 
   Grid, 
   InputAdornment,
-  Button
+  Button,
+  Skeleton
 } from '@mui/material';
 import { Lock } from 'lucide-react';
 import { useEffect } from 'react';
@@ -214,53 +215,66 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             }}
             {...register('pinCode')}
           />
-          {isPostalLoading && <span className={styles.loadingText}>Fetching City & State...</span>}
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="City"
-            disabled
-            className={styles.readonlyField}
-            error={!!errors.city}
-            helperText={errors.city?.message || ' '}
-            slotProps={{ 
-              inputLabel: { shrink: !!watch('city') },
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Lock size={18} className={styles.lockIcon} />
-                  </InputAdornment>
-                ),
-              }
-            }}
-            {...register('city')}
-          />
+          {isPostalLoading ? (
+            <div style={{ paddingTop: 4 }}>
+              <Skeleton variant="rectangular" height={56} style={{ borderRadius: 10 }} animation="wave" />
+              <div style={{ minHeight: 20, marginTop: 4 }} />
+            </div>
+          ) : (
+            <TextField
+              fullWidth
+              label="City"
+              disabled
+              className={styles.readonlyField}
+              error={!!errors.city}
+              helperText={errors.city?.message || ' '}
+              slotProps={{ 
+                inputLabel: { shrink: !!watch('city') },
+                formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock size={18} className={styles.lockIcon} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
+              {...register('city')}
+            />
+          )}
         </Grid>
 
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="State"
-            disabled
-            className={styles.readonlyField}
-            error={!!errors.state}
-            helperText={errors.state?.message || ' '}
-            slotProps={{ 
-              inputLabel: { shrink: !!watch('state') },
-              formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Lock size={18} className={styles.lockIcon} />
-                  </InputAdornment>
-                ),
-              }
-            }}
-            {...register('state')}
-          />
+          {isPostalLoading ? (
+            <div style={{ paddingTop: 4 }}>
+              <Skeleton variant="rectangular" height={56} style={{ borderRadius: 10 }} animation="wave" />
+              <div style={{ minHeight: 20, marginTop: 4 }} />
+            </div>
+          ) : (
+            <TextField
+              fullWidth
+              label="State"
+              disabled
+              className={styles.readonlyField}
+              error={!!errors.state}
+              helperText={errors.state?.message || ' '}
+              slotProps={{ 
+                inputLabel: { shrink: !!watch('state') },
+                formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Lock size={18} className={styles.lockIcon} />
+                    </InputAdornment>
+                  ),
+                }
+              }}
+              {...register('state')}
+            />
+          )}
         </Grid>
       </Grid>
 

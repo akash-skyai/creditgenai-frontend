@@ -1,0 +1,56 @@
+.formContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.iconWrapper {
+  margin-bottom: 0.25rem;
+}
+
+.titleSkeleton {
+  border-radius: 4px;
+}
+
+.subtitleSkeleton {
+  border-radius: 4px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputSkeletonGroup {
+  width: 100%;
+}
+
+.inputSkeleton {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.errorSlot {
+  min-height: 22px;
+  margin-top: 4px;
+}
+
+.buttonSkeleton {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.termsSkeleton {
+  border-radius: 4px;
+  margin: 0 auto;
+}
