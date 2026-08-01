@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { PersonalInfoStep } from './PersonalInfoStep';
+import { LocationFields } from './LocationFields';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { personalInfoSchema } from '../../schemas/personalInfo.schema';
 import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // Mock the TanStack Query hook
 vi.mock('../../hooks/usePinCode', () => ({
@@ -23,27 +21,23 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   
   return (
     <QueryClientProvider client={queryClient}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <FormProvider {...methods}>
-          {children}
-        </FormProvider>
-      </LocalizationProvider>
+      <FormProvider {...methods}>
+        {children}
+      </FormProvider>
     </QueryClientProvider>
   );
 }
 
-describe('PersonalInfoStep', () => {
-  it('renders correctly', () => {
-    const handleNext = vi.fn();
+describe('LocationFields', () => {
+  it('renders LocationFields components correctly', () => {
     render(
       <Wrapper>
-        <PersonalInfoStep onNext={handleNext} />
+        <LocationFields />
       </Wrapper>
     );
 
-    expect(screen.getByText('Personal Details')).toBeInTheDocument();
-    expect(screen.getByLabelText(/First Name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/PAN Number/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Next/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/PIN Code/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/City/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/State/i)).toBeInTheDocument();
   });
 });

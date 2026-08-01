@@ -1,46 +1,22 @@
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import {
   TextField,
   Grid,
   InputAdornment,
-  Button,
-  CircularProgress
+  Button
 } from '@mui/material';
-import { Lock, CheckCircle2 } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
 import { usePinCode } from '../../hooks/usePinCode';
+import { LocationFields } from './LocationFields';
 import styles from './PersonalInfoStep.module.scss';
 
-export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
-  const {
-    control,
-    register,
-    formState: { errors, isSubmitting },
-    watch,
-    setValue,
-    trigger
-  } = useFormContext<PersonalInfoFormData>();
-
-  const pinCode = watch('pinCode');
-
-  const { data: postalData, isLoading: isPostalLoading, error: postalError } = usePinCode(pinCode || '');
-
-  // Auto-fill City and State when valid postal data is fetched
-  useEffect(() => {
-    if (postalData) {
-      setValue('city', postalData.city, { shouldValidate: true });
-      setValue('state', postalData.state, { shouldValidate: true });
-    } else if (postalError) {
-      setValue('city', '');
-      setValue('state', '');
-      // We could set an error on the pinCode field here, but react-hook-form will handle regex.
-      // If regex passes but API fails, we could set custom error:
-      // setError('pinCode', { type: 'manual', message: postalError.message });
-    }
-  }, [postalData, postalError, setValue]);
+const NextStepButton = ({ onNext }: { onNext: () => void }) => {
+  const { formState: { isSubmitting }, trigger, control } = useFormContext<PersonalInfoFormData>();
+  const pinCode = useWatch({ name: 'pinCode', control });
+  const { isLoading: isPostalLoading } = usePinCode(pinCode || '');
 
   const handleNext = async () => {
     const isStepValid = await trigger([
@@ -59,6 +35,29 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
       onNext();
     }
   };
+
+  return (
+    <div className={styles.actionContainer}>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={handleNext}
+        className={styles.nextButton}
+        disabled={isPostalLoading || isSubmitting}
+      >
+        Next Step &rarr;
+      </Button>
+    </div>
+  );
+};
+
+export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
+  const {
+    control,
+    register,
+    formState: { errors }
+  } = useFormContext<PersonalInfoFormData>();
 
   return (
     <div className={styles.stepContainer}>
@@ -214,90 +213,10 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
           />
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="PIN Code"
-            placeholder="e.g. 400001"
-            error={!!errors.pinCode || !!postalError}
-            helperText={errors.pinCode?.message || postalError?.message}
-            slotProps={{
-              htmlInput: { maxLength: 6 },
-              formHelperText: { className: styles.helperTextSpacer }
-            }}
-            {...register('pinCode')}
-          />
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="City"
-            error={!!errors.city}
-            helperText={errors.city?.message}
-            slotProps={{
-              inputLabel: { shrink: !!watch('city') || isPostalLoading },
-              formHelperText: { className: styles.helperTextSpacer },
-              input: {
-                endAdornment: isPostalLoading ? (
-                  <InputAdornment position="end">
-                    <CircularProgress size={20} />
-                  </InputAdornment>
-                ) : (postalData && watch('city') === postalData.city) ? (
-                  <InputAdornment position="end">
-                    <CheckCircle2 size={18} className={styles.successIcon} />
-                  </InputAdornment>
-                ) : null,
-              }
-            }}
-            {...register('city')}
-          />
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
-            fullWidth
-            label="State"
-            disabled
-            className={styles.readonlyField}
-            error={!!errors.state}
-            helperText={errors.state?.message}
-            slotProps={{
-              inputLabel: { shrink: !!watch('state') || isPostalLoading },
-              formHelperText: { className: styles.helperTextSpacer },
-              input: {
-                endAdornment: isPostalLoading ? (
-                  <InputAdornment position="end">
-                    <CircularProgress size={20} />
-                  </InputAdornment>
-                ) : postalData ? (
-                  <InputAdornment position="end">
-                    <CheckCircle2 size={18} className={styles.successIcon} />
-                  </InputAdornment>
-                ) : (
-                  <InputAdornment position="end">
-                    <Lock size={18} className={styles.lockIcon} />
-                  </InputAdornment>
-                ),
-              }
-            }}
-            {...register('state')}
-          />
-        </Grid>
+        <LocationFields />
       </Grid>
 
-      <div className={styles.actionContainer}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleNext}
-          className={styles.nextButton}
-          disabled={isPostalLoading || isSubmitting}
-        >
-          Next Step &rarr;
-        </Button>
-      </div>
+      <NextStepButton onNext={onNext} />
     </div>
   );
 }

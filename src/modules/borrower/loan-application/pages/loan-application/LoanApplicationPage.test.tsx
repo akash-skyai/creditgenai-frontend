@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { LoanApplicationPage } from './LoanApplicationPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 // Mock the TanStack Query hook used in child
 vi.mock('../../hooks/usePinCode', () => ({
@@ -14,7 +16,9 @@ describe('LoanApplicationPage', () => {
   it('renders stepper and first step', () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <LoanApplicationPage />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LoanApplicationPage />
+        </LocalizationProvider>
       </QueryClientProvider>
     );
 
