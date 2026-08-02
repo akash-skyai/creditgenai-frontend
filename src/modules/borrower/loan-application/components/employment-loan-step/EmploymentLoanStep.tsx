@@ -115,9 +115,11 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                     </button>
                   ))}
                 </div>
-                {errors.employmentType && (
-                  <span className={styles.errorHelperText}>{errors.employmentType.message}</span>
-                )}
+                <div className={styles.errorSlot}>
+                  {errors.employmentType && (
+                    <span className={styles.errorHelperText}>{errors.employmentType.message}</span>
+                  )}
+                </div>
               </div>
             )}
           />
@@ -154,8 +156,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                       </Select>
                     )}
                   />
-                  <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-                    {errors.sector?.message}
+                  <FormHelperText className={styles.helperTextSpacer}>
+                    {errors.sector?.message || ' '}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -175,8 +177,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                             label="Company Name"
                             placeholder="e.g. Acme Corp"
                             error={!!errors.companyName}
-                            helperText={errors.companyName?.message}
-                            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+                            helperText={errors.companyName?.message || ' '}
+                            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                           />
                         )}
                       />
@@ -195,8 +197,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                             </Select>
                           )}
                         />
-                        <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-                          {errors.companyExperience?.message}
+                        <FormHelperText className={styles.helperTextSpacer}>
+                          {errors.companyExperience?.message || ' '}
                         </FormHelperText>
                       </FormControl>
                     </Grid>
@@ -219,8 +221,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                             label="Organization / Employer"
                             placeholder="e.g. State Bank of India, Indian Railways"
                             error={!!errors.organizationEmployer}
-                            helperText={errors.organizationEmployer?.message}
-                            slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+                            helperText={errors.organizationEmployer?.message || ' '}
+                            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                           />
                         )}
                       />
@@ -247,8 +249,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                       </Select>
                     )}
                   />
-                  <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-                    {errors.businessType?.message}
+                  <FormHelperText className={styles.helperTextSpacer}>
+                    {errors.businessType?.message || ' '}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -266,8 +268,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                       </Select>
                     )}
                   />
-                  <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-                    {errors.totalExperience?.message}
+                  <FormHelperText className={styles.helperTextSpacer}>
+                    {errors.totalExperience?.message || ' '}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -289,24 +291,19 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label={employmentType === 'salaried' ? 'Take-Home Salary' : 'Average Monthly Income'}
                   placeholder="e.g. 50,000"
                   error={!!errors.monthlyIncome}
-                  helperText={errors.monthlyIncome?.message}
+                  helperText={errors.monthlyIncome?.message || (monthlyIncome ? numberToWords(monthlyIncome as number) : ' ')}
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
                     field.onChange(values.floatValue);
                   }}
                   slotProps={{
-                    formHelperText: { style: { minHeight: errors.monthlyIncome ? '20px' : '0px', marginTop: '4px' } },
+                    formHelperText: { className: styles.helperTextSpacer },
                     input: {
                       startAdornment: <InputAdornment position="start">₹</InputAdornment>,
                     }
                   }}
                 />
-                {!errors.monthlyIncome && monthlyIncome ? (
-                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px', paddingLeft: '14px', minHeight: '20px' }}>
-                    {numberToWords(monthlyIncome as number)}
-                  </div>
-                ) : <div style={{ minHeight: !errors.monthlyIncome ? '24px' : '0' }}></div>}
               </div>
             )}
           />
@@ -325,14 +322,14 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 label="Existing Total EMI (if any)"
                 placeholder="e.g. 0"
                 error={!!errors.existingEmi}
-                helperText={errors.existingEmi?.message}
+                helperText={errors.existingEmi?.message || ' '}
                 thousandSeparator=","
                 valueIsNumericString
                 onValueChange={(values) => {
                   field.onChange(values.floatValue || 0);
                 }}
                 slotProps={{
-                  formHelperText: { style: { minHeight: '20px', marginTop: '4px' } },
+                  formHelperText: { className: styles.helperTextSpacer },
                   input: {
                     startAdornment: <InputAdornment position="start">₹</InputAdornment>,
                   }
@@ -356,26 +353,21 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label="Required Loan Amount"
                   placeholder="e.g. 2,00,000"
                   error={!!errors.loanAmount}
-                  helperText={errors.loanAmount?.message}
+                  helperText={errors.loanAmount?.message || (loanAmount ? numberToWords(loanAmount as number) : ' ')}
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
                     field.onChange(values.floatValue);
                   }}
                   slotProps={{
-                    formHelperText: { style: { minHeight: errors.loanAmount ? '20px' : '0px', marginTop: '4px' } },
+                    formHelperText: { className: styles.helperTextSpacer },
                     input: {
                       startAdornment: <InputAdornment position="start">₹</InputAdornment>,
                     }
                   }}
                 />
-                {!errors.loanAmount && loanAmount ? (
-                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px', paddingLeft: '14px', minHeight: '20px' }}>
-                    {numberToWords(loanAmount as number)}
-                  </div>
-                ) : <div style={{ minHeight: !errors.loanAmount ? '24px' : '0' }}></div>}
                 
-                <div className={styles.sliderContainer} style={{ marginTop: '16px' }}>
+                <div className={styles.sliderContainer}>
                   <Slider
                     value={typeof field.value === 'number' ? field.value : 10000}
                     onChange={(_, newValue) => field.onChange(newValue as number)}
@@ -421,8 +413,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 </Select>
               )}
             />
-            <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-              {errors.loanPurpose?.message}
+            <FormHelperText className={styles.helperTextSpacer}>
+              {errors.loanPurpose?.message || ' '}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -442,8 +434,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 </Select>
               )}
             />
-            <FormHelperText style={{ minHeight: '20px', marginTop: '4px' }}>
-              {errors.loanTenure?.message}
+            <FormHelperText className={styles.helperTextSpacer}>
+              {errors.loanTenure?.message || ' '}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -461,8 +453,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label="Please Specify Loan Purpose"
                   placeholder="E.g. Buying a new laptop"
                   error={!!errors.loanPurposeOther}
-                  helperText={errors.loanPurposeOther?.message}
-                  slotProps={{ formHelperText: { style: { minHeight: '20px', marginTop: '4px' } } }}
+                  helperText={errors.loanPurposeOther?.message || ' '}
+                  slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                 />
               )}
             />

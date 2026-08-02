@@ -98,3 +98,13 @@
   color: var(--text-muted);
   margin-top: -8px;
 }
+
+/* Helper text spacer to prevent layout shift */
+.helperTextSpacer {
+  min-height: 20px;
+  margin-top: 4px;
+}
+
+.errorSlot {
+  min-height: 20px;
+}
