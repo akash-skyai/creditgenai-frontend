@@ -10,7 +10,6 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
-  Collapse,
   Slider,
   Checkbox
 } from '@mui/material';
