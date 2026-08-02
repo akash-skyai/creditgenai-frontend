@@ -33,9 +33,18 @@ export function LoanApplicationPage() {
       city: '',
       state: '',
       employmentType: 'salaried',
+      sector: '',
+      organizationEmployer: '',
+      companyName: '',
+      companyExperience: '',
+      businessType: '',
+      totalExperience: '',
       monthlyIncome: '' as unknown as number,
+      existingEmi: 0,
       loanAmount: '' as unknown as number,
       loanPurpose: '',
+      loanPurposeOther: '',
+      loanTenure: '',
     }
   });
 

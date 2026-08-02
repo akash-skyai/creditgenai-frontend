@@ -13,10 +13,28 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   const methods = useForm<LoanApplicationFormData>({
     resolver: zodResolver(loanApplicationSchema),
     defaultValues: {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      gender: '' as 'male',
+      email: '',
+      panNumber: '',
+      pinCode: '',
+      city: '',
+      state: '',
       employmentType: 'salaried',
+      sector: '',
+      organizationEmployer: '',
+      companyName: '',
+      companyExperience: '',
+      businessType: '',
+      totalExperience: '',
       monthlyIncome: 50000,
+      existingEmi: 0,
       loanAmount: 100000,
       loanPurpose: 'Debt Consolidation',
+      loanPurposeOther: '',
+      loanTenure: '36',
     }
   });
   
@@ -42,8 +60,8 @@ describe('EmploymentLoanStep', () => {
 
     expect(screen.getByText('Employment & Loan Details')).toBeInTheDocument();
     expect(screen.getByText('Employment Type')).toBeInTheDocument();
-    expect(screen.getByLabelText(/Average Monthly Income/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Desired Loan Amount/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Take-Home Salary/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Required Loan Amount/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Next Step/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Back/i })).toBeInTheDocument();
   });
