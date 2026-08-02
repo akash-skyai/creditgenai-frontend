@@ -62,7 +62,8 @@
   outline: none;
 
   &:hover {
-    background-color: #e2e8f0;
+    background-color: var(--surface-disabled);
+    transform: translateY(-1px);
   }
 }
 
@@ -71,9 +72,11 @@
   border-color: var(--brand-primary);
   color: var(--brand-primary);
   font-weight: 500;
+  box-shadow: 0 2px 8px rgba(29, 78, 216, 0.1);
 
   &:hover {
     background-color: var(--brand-primary-light);
+    transform: translateY(-1px);
   }
 }
 
@@ -88,7 +91,7 @@
 }
 
 .sliderContainer {
-  padding: 0 var(--space-2);
+  padding: var(--space-2) var(--space-2) 0;
 }
 
 .sliderLabels {
@@ -96,7 +99,7 @@
   justify-content: space-between;
   font-size: var(--font-size-xs);
   color: var(--text-muted);
-  margin-top: -8px;
+  margin-top: var(--space-1);
 }
 
 /* Helper text spacer to prevent layout shift */

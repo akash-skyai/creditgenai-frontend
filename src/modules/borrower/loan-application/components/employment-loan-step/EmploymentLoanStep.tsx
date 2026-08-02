@@ -126,9 +126,9 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
         </Grid>
 
         {/* Conditional Employment Fields */}
-        <Grid size={{ xs: 12 }} style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <Grid size={{ xs: 12 }}>
           <Collapse in={employmentType === 'salaried'} mountOnEnter unmountOnExit>
-            <Grid container spacing={3} style={{ paddingTop: '24px' }}>
+            <Grid container spacing={3}>
               <Grid size={{ xs: 12 }}>
                 <FormControl fullWidth error={!!errors.sector}>
                   <InputLabel id="sector-label">Employee Sector</InputLabel>
@@ -157,15 +157,15 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                     )}
                   />
                   <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.sector?.message || ' '}
+                    {errors.sector?.message || '\u00A0'}
                   </FormHelperText>
                 </FormControl>
               </Grid>
 
               {/* Private Sector Fields */}
-              <Grid size={{ xs: 12 }} style={{ paddingTop: 0, paddingBottom: 0 }}>
+              <Grid size={{ xs: 12 }}>
                 <Collapse in={sector === 'Private Sector'} mountOnEnter unmountOnExit>
-                  <Grid container spacing={3} style={{ paddingTop: '24px' }}>
+                  <Grid container spacing={3}>
                     <Grid size={{ xs: 12, sm: 6 }}>
                       <Controller
                         name="companyName"
@@ -177,7 +177,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                             label="Company Name"
                             placeholder="e.g. Acme Corp"
                             error={!!errors.companyName}
-                            helperText={errors.companyName?.message || ' '}
+                            helperText={errors.companyName?.message || '\u00A0'}
                             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                           />
                         )}
@@ -198,7 +198,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                           )}
                         />
                         <FormHelperText className={styles.helperTextSpacer}>
-                          {errors.companyExperience?.message || ' '}
+                          {errors.companyExperience?.message || '\u00A0'}
                         </FormHelperText>
                       </FormControl>
                     </Grid>
@@ -207,9 +207,9 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
               </Grid>
 
               {/* Government Sector Fields */}
-              <Grid size={{ xs: 12 }} style={{ paddingTop: 0, paddingBottom: 0 }}>
+              <Grid size={{ xs: 12 }}>
                 <Collapse in={sector === 'Government Sector'} mountOnEnter unmountOnExit>
-                  <Grid container spacing={3} style={{ paddingTop: '24px' }}>
+                  <Grid container spacing={3}>
                     <Grid size={{ xs: 12 }}>
                       <Controller
                         name="organizationEmployer"
@@ -221,7 +221,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                             label="Organization / Employer"
                             placeholder="e.g. State Bank of India, Indian Railways"
                             error={!!errors.organizationEmployer}
-                            helperText={errors.organizationEmployer?.message || ' '}
+                            helperText={errors.organizationEmployer?.message || '\u00A0'}
                             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                           />
                         )}
@@ -234,7 +234,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           </Collapse>
 
           <Collapse in={employmentType === 'self-employed'} mountOnEnter unmountOnExit>
-            <Grid container spacing={3} style={{ paddingTop: '24px' }}>
+            <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <FormControl fullWidth error={!!errors.businessType}>
                   <InputLabel id="business-type-label">Self-Employed Status</InputLabel>
@@ -250,7 +250,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                     )}
                   />
                   <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.businessType?.message || ' '}
+                    {errors.businessType?.message || '\u00A0'}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -269,7 +269,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                     )}
                   />
                   <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.totalExperience?.message || ' '}
+                    {errors.totalExperience?.message || '\u00A0'}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -291,7 +291,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label={employmentType === 'salaried' ? 'Take-Home Salary' : 'Average Monthly Income'}
                   placeholder="e.g. 50,000"
                   error={!!errors.monthlyIncome}
-                  helperText={errors.monthlyIncome?.message || (monthlyIncome ? numberToWords(monthlyIncome as number) : ' ')}
+                  helperText={errors.monthlyIncome?.message || (monthlyIncome ? numberToWords(monthlyIncome as number) : '\u00A0')}
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
@@ -322,7 +322,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 label="Existing Total EMI (if any)"
                 placeholder="e.g. 0"
                 error={!!errors.existingEmi}
-                helperText={errors.existingEmi?.message || ' '}
+                helperText={errors.existingEmi?.message || '\u00A0'}
                 thousandSeparator=","
                 valueIsNumericString
                 onValueChange={(values) => {
@@ -353,7 +353,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label="Required Loan Amount"
                   placeholder="e.g. 2,00,000"
                   error={!!errors.loanAmount}
-                  helperText={errors.loanAmount?.message || (loanAmount ? numberToWords(loanAmount as number) : ' ')}
+                  helperText={errors.loanAmount?.message || (loanAmount ? numberToWords(loanAmount as number) : '\u00A0')}
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
@@ -414,7 +414,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
               )}
             />
             <FormHelperText className={styles.helperTextSpacer}>
-              {errors.loanPurpose?.message || ' '}
+              {errors.loanPurpose?.message || '\u00A0'}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -435,7 +435,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
               )}
             />
             <FormHelperText className={styles.helperTextSpacer}>
-              {errors.loanTenure?.message || ' '}
+              {errors.loanTenure?.message || '\u00A0'}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -453,7 +453,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   label="Please Specify Loan Purpose"
                   placeholder="E.g. Buying a new laptop"
                   error={!!errors.loanPurposeOther}
-                  helperText={errors.loanPurposeOther?.message || ' '}
+                  helperText={errors.loanPurposeOther?.message || '\u00A0'}
                   slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
                 />
               )}

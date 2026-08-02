@@ -73,7 +73,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="First Name"
             placeholder="e.g. Rahul"
             error={!!errors.firstName}
-            helperText={errors.firstName?.message}
+            helperText={errors.firstName?.message || '\u00A0'}
             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('firstName')}
           />
@@ -85,7 +85,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="Middle Name"
             placeholder="Optional"
             error={!!errors.middleName}
-            helperText={errors.middleName?.message}
+            helperText={errors.middleName?.message || '\u00A0'}
             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('middleName')}
           />
@@ -97,7 +97,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="Last Name"
             placeholder="e.g. Sharma"
             error={!!errors.lastName}
-            helperText={errors.lastName?.message}
+            helperText={errors.lastName?.message || '\u00A0'}
             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('lastName')}
           />
@@ -132,7 +132,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             placeholder="rahul@example.com"
             type="email"
             error={!!errors.email}
-            helperText={errors.email?.message}
+            helperText={errors.email?.message || '\u00A0'}
             slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
             {...register('email')}
           />
@@ -184,7 +184,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
                   textField: {
                     fullWidth: true,
                     error: !!errors.dateOfBirth,
-                    helperText: errors.dateOfBirth?.message,
+                    helperText: errors.dateOfBirth?.message || '\u00A0',
                     slotProps: { formHelperText: { className: styles.helperTextSpacer } }
                   }
                 }}
@@ -199,7 +199,7 @@ export function PersonalInfoStep({ onNext }: { onNext: () => void }) {
             label="PAN Number"
             placeholder="ABCDE1234F"
             error={!!errors.panNumber}
-            helperText={errors.panNumber?.message}
+            helperText={errors.panNumber?.message || '\u00A0'}
             slotProps={{
               htmlInput: { style: { textTransform: 'uppercase' } },
               formHelperText: { className: styles.helperTextSpacer }
