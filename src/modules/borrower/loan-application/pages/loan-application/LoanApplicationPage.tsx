@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Stepper, Step, StepLabel } from '@mui/material';
 import { PersonalInfoStep } from '../../components/personal-info-step/PersonalInfoStep';
 import { SuccessScreen } from '../../components/success-screen/SuccessScreen';
-import { loanApplicationSchema } from '../../schemas/loanApplication.schema';
-import type { LoanApplicationFormData } from '../../schemas/loanApplication.schema';
+import { loanApplicationSchema } from '../../schemas/loan-application.schema';
+import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { EmploymentLoanStep } from '../../components/employment-loan-step/EmploymentLoanStep';
 import styles from './LoanApplicationPage.module.scss';
 
@@ -20,7 +20,7 @@ export function LoanApplicationPage() {
 
   // Setup React Hook Form
   const methods = useForm<LoanApplicationFormData>({
-    resolver: zodResolver(loanApplicationSchema),
+    resolver: zodResolver(loanApplicationSchema) as any,
     mode: 'onSubmit', // Validate on submit, re-validate on change
     defaultValues: {
       firstName: '',

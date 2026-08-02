@@ -3,15 +3,15 @@ import { describe, it, expect, vi } from 'vitest';
 import { EmploymentLoanStep } from './EmploymentLoanStep';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loanApplicationSchema } from '../../schemas/loanApplication.schema';
-import type { LoanApplicationFormData } from '../../schemas/loanApplication.schema';
+import { loanApplicationSchema } from '../../schemas/loan-application.schema';
+import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   const methods = useForm<LoanApplicationFormData>({
-    resolver: zodResolver(loanApplicationSchema),
+    resolver: zodResolver(loanApplicationSchema) as any,
     defaultValues: {
       firstName: '',
       middleName: '',

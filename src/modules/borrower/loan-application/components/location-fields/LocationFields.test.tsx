@@ -3,8 +3,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { LocationFields } from './LocationFields';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { personalInfoSchema } from '../../schemas/personalInfo.schema';
-import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
+import { personalInfoSchema } from '../../schemas/personal-info.schema';
+import type { PersonalInfoFormData } from '../../schemas/personal-info.schema';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock the TanStack Query hook

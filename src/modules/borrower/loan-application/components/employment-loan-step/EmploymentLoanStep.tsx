@@ -13,7 +13,7 @@ import {
   Collapse,
   Slider
 } from '@mui/material';
-import type { LoanApplicationFormData } from '../../schemas/loanApplication.schema';
+import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { numberToWords } from '@/shared/utils/numberToWords';
 import styles from './EmploymentLoanStep.module.scss';
 

@@ -8,9 +8,9 @@ import {
 import { Lock } from 'lucide-react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
+import type { PersonalInfoFormData } from '../../schemas/personal-info.schema';
 import { usePinCode } from '../../hooks/usePinCode';
-import { LocationFields } from './LocationFields';
+import { LocationFields } from '../location-fields/LocationFields';
 import styles from './PersonalInfoStep.module.scss';
 
 const NextStepButton = ({ onNext }: { onNext: () => void }) => {

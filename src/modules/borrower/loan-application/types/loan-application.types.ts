@@ -1,4 +1,4 @@
-import type { PersonalInfoFormData } from '../schemas/personalInfo.schema';
+import type { PersonalInfoFormData } from '../schemas/personal-info.schema';
 
 export interface LoanApplicationPayload {
   personalInfo: PersonalInfoFormData;

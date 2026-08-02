@@ -7,9 +7,9 @@ import {
 } from '@mui/material';
 import { Lock, CheckCircle2 } from 'lucide-react';
 import { useEffect } from 'react';
-import type { PersonalInfoFormData } from '../../schemas/personalInfo.schema';
+import type { PersonalInfoFormData } from '../../schemas/personal-info.schema';
 import { usePinCode } from '../../hooks/usePinCode';
-import styles from './PersonalInfoStep.module.scss';
+import styles from '../personal-info-step/PersonalInfoStep.module.scss';
 
 export function LocationFields() {
   const {
