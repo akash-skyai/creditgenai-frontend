@@ -51,6 +51,10 @@
 
 .pillButton {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   padding: 12px;
   background-color: var(--surface-subtle);
   border: 1px solid var(--border-default);
@@ -110,4 +114,78 @@
 
 .errorSlot {
   min-height: 20px;
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card, 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03));
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle, var(--surface-subtle));
+}
+
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background-color: var(--brand-primary-light);
+  color: var(--brand-primary);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Consent Checkbox */
+.consentContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--status-info-light);
+  border: 1px solid rgba(3, 105, 161, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.consentIcon {
+  color: var(--brand-primary);
+  display: flex;
+  align-items: center;
+}
+
+.consentCheckboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-grow: 1;
+  
+  .MuiCheckbox-root {
+    padding: 0;
+    color: var(--brand-primary);
+  }
+}
+
+.consentLabel {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
 }

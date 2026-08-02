@@ -11,11 +11,14 @@ import {
   FormControl,
   FormHelperText,
   Collapse,
-  Slider
+  Slider,
+  Checkbox
 } from '@mui/material';
+import { Briefcase, Banknote, User, ShieldCheck } from 'lucide-react';
 import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { numberToWords } from '@/shared/utils/numberToWords';
 import styles from './EmploymentLoanStep.module.scss';
+import { useState } from 'react';
 
 interface EmploymentLoanStepProps {
   onNext: () => void;
@@ -44,6 +47,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
     trigger,
     setValue
   } = useFormContext<LoanApplicationFormData>();
+
+  const [hasConsent, setHasConsent] = useState(false);
 
   const employmentType = useWatch({ control, name: 'employmentType' });
   const loanPurpose = useWatch({ control, name: 'loanPurpose' });
@@ -79,9 +84,18 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
         Tell us a bit about your income and loan requirements.
       </p>
 
-      <Grid container spacing={3}>
-        {/* Employment Type */}
-        <Grid size={{ xs: 12 }}>
+      {/* Employment Details Card */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <div className={styles.cardIcon}>
+            <Briefcase size={24} />
+          </div>
+          <h3 className={styles.cardTitle}>Employment Details</h3>
+        </div>
+
+        <Grid container spacing={3}>
+          {/* Employment Type */}
+        <Grid size={{ xs: 12, sm: 6 }}>
           <Controller
             name="employmentType"
             control={control}
@@ -111,6 +125,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                         }
                       }}
                     >
+                      {type === 'salaried' ? <Briefcase size={18} /> : <User size={18} />}
                       {type === 'salaried' ? 'Salaried' : 'Self-employed'}
                     </button>
                   ))}
@@ -125,157 +140,163 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           />
         </Grid>
 
-        {/* Conditional Employment Fields */}
-        <Grid size={{ xs: 12 }}>
-          <Collapse in={employmentType === 'salaried'} mountOnEnter unmountOnExit>
-            <Grid container spacing={3}>
-              <Grid size={{ xs: 12 }}>
-                <FormControl fullWidth error={!!errors.sector}>
-                  <InputLabel id="sector-label">Employee Sector</InputLabel>
-                  <Controller
-                    name="sector"
-                    control={control}
-                    render={({ field }) => (
-                      <Select 
-                        {...field} 
-                        labelId="sector-label" 
-                        label="Employee Sector"
-                        onChange={(e) => {
-                          field.onChange(e);
-                          if (e.target.value === 'Government Sector') {
-                            setValue('companyName', '');
-                            setValue('companyExperience', '');
-                          } else {
-                            setValue('organizationEmployer', '');
-                          }
-                        }}
-                      >
-                        {SECTORS.map((s) => (
-                          <MenuItem key={s} value={s}>{s}</MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                  <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.sector?.message || '\u00A0'}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
+        {/* Dynamic adjacent field (Sector or Business Type) */}
+        <Grid size={{ xs: 12, sm: 6 }}>
+          {employmentType === 'salaried' && (
+            <FormControl fullWidth error={!!errors.sector}>
+              <InputLabel id="sector-label">Employee Sector</InputLabel>
+              <Controller
+                name="sector"
+                control={control}
+                render={({ field }) => (
+                  <Select 
+                    {...field} 
+                    labelId="sector-label" 
+                    label="Employee Sector"
+                    MenuProps={{ disableScrollLock: true }}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      if (e.target.value === 'Government Sector') {
+                        setValue('companyName', '');
+                        setValue('companyExperience', '');
+                      } else {
+                        setValue('organizationEmployer', '');
+                      }
+                    }}
+                  >
+                    {SECTORS.map((s) => (
+                      <MenuItem key={s} value={s}>{s}</MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <FormHelperText className={styles.helperTextSpacer}>
+                {errors.sector?.message || '\u00A0'}
+              </FormHelperText>
+            </FormControl>
+          )}
 
-              {/* Private Sector Fields */}
-              <Grid size={{ xs: 12 }}>
-                <Collapse in={sector === 'Private Sector'} mountOnEnter unmountOnExit>
-                  <Grid container spacing={3}>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <Controller
-                        name="companyName"
-                        control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            fullWidth
-                            label="Company Name"
-                            placeholder="e.g. Acme Corp"
-                            error={!!errors.companyName}
-                            helperText={errors.companyName?.message || '\u00A0'}
-                            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <FormControl fullWidth error={!!errors.companyExperience}>
-                        <InputLabel id="company-experience-label">Company Experience</InputLabel>
-                        <Controller
-                          name="companyExperience"
-                          control={control}
-                          render={({ field }) => (
-                            <Select {...field} labelId="company-experience-label" label="Company Experience">
-                              {EXPERIENCES.map((e) => (
-                                <MenuItem key={e} value={e}>{e}</MenuItem>
-                              ))}
-                            </Select>
-                          )}
-                        />
-                        <FormHelperText className={styles.helperTextSpacer}>
-                          {errors.companyExperience?.message || '\u00A0'}
-                        </FormHelperText>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </Collapse>
-              </Grid>
-
-              {/* Government Sector Fields */}
-              <Grid size={{ xs: 12 }}>
-                <Collapse in={sector === 'Government Sector'} mountOnEnter unmountOnExit>
-                  <Grid container spacing={3}>
-                    <Grid size={{ xs: 12 }}>
-                      <Controller
-                        name="organizationEmployer"
-                        control={control}
-                        render={({ field }) => (
-                          <TextField
-                            {...field}
-                            fullWidth
-                            label="Organization / Employer"
-                            placeholder="e.g. State Bank of India, Indian Railways"
-                            error={!!errors.organizationEmployer}
-                            helperText={errors.organizationEmployer?.message || '\u00A0'}
-                            slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
-                          />
-                        )}
-                      />
-                    </Grid>
-                  </Grid>
-                </Collapse>
-              </Grid>
-            </Grid>
-          </Collapse>
-
-          <Collapse in={employmentType === 'self-employed'} mountOnEnter unmountOnExit>
-            <Grid container spacing={3}>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <FormControl fullWidth error={!!errors.businessType}>
-                  <InputLabel id="business-type-label">Self-Employed Status</InputLabel>
-                  <Controller
-                    name="businessType"
-                    control={control}
-                    render={({ field }) => (
-                      <Select {...field} labelId="business-type-label" label="Self-Employed Status">
-                        {BUSINESS_TYPES.map((b) => (
-                          <MenuItem key={b} value={b}>{b}</MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                  <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.businessType?.message || '\u00A0'}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <FormControl fullWidth error={!!errors.totalExperience}>
-                  <InputLabel id="experience-label">Total Experience</InputLabel>
-                  <Controller
-                    name="totalExperience"
-                    control={control}
-                    render={({ field }) => (
-                      <Select {...field} labelId="experience-label" label="Total Experience">
-                        {EXPERIENCES.map((e) => (
-                          <MenuItem key={e} value={e}>{e}</MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                  <FormHelperText className={styles.helperTextSpacer}>
-                    {errors.totalExperience?.message || '\u00A0'}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Collapse>
+          {employmentType === 'self-employed' && (
+            <FormControl fullWidth error={!!errors.businessType}>
+              <InputLabel id="business-type-label">Self-Employed Status</InputLabel>
+              <Controller
+                name="businessType"
+                control={control}
+                render={({ field }) => (
+                  <Select 
+                    {...field} 
+                    labelId="business-type-label" 
+                    label="Self-Employed Status"
+                    MenuProps={{ disableScrollLock: true }}
+                  >
+                    {BUSINESS_TYPES.map((b) => (
+                      <MenuItem key={b} value={b}>{b}</MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <FormHelperText className={styles.helperTextSpacer}>
+                {errors.businessType?.message || '\u00A0'}
+              </FormHelperText>
+            </FormControl>
+          )}
         </Grid>
+
+        {/* Salaried - Private Sector Fields */}
+        {employmentType === 'salaried' && sector === 'Private Sector' && (
+          <>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Controller
+                name="companyName"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    label="Company Name"
+                    placeholder="e.g. Acme Corp"
+                    error={!!errors.companyName}
+                    helperText={errors.companyName?.message || '\u00A0'}
+                    slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <FormControl fullWidth error={!!errors.companyExperience}>
+                <InputLabel id="company-experience-label">Company Experience</InputLabel>
+                <Controller
+                  name="companyExperience"
+                  control={control}
+                  render={({ field }) => (
+                    <Select 
+                      {...field} 
+                      labelId="company-experience-label" 
+                      label="Company Experience"
+                      MenuProps={{ disableScrollLock: true }}
+                    >
+                      {EXPERIENCES.map((e) => (
+                        <MenuItem key={e} value={e}>{e}</MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                <FormHelperText className={styles.helperTextSpacer}>
+                  {errors.companyExperience?.message || '\u00A0'}
+                </FormHelperText>
+              </FormControl>
+            </Grid>
+          </>
+        )}
+
+        {/* Salaried - Government Sector Fields */}
+        {employmentType === 'salaried' && sector === 'Government Sector' && (
+          <Grid size={{ xs: 12 }}>
+            <Controller
+              name="organizationEmployer"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label="Organization / Employer"
+                  placeholder="e.g. State Bank of India, Indian Railways"
+                  error={!!errors.organizationEmployer}
+                  helperText={errors.organizationEmployer?.message || '\u00A0'}
+                  slotProps={{ formHelperText: { className: styles.helperTextSpacer } }}
+                />
+              )}
+            />
+          </Grid>
+        )}
+
+        {/* Self Employed - Total Experience */}
+        {employmentType === 'self-employed' && (
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <FormControl fullWidth error={!!errors.totalExperience}>
+              <InputLabel id="experience-label">Total Experience</InputLabel>
+              <Controller
+                name="totalExperience"
+                control={control}
+                render={({ field }) => (
+                  <Select 
+                    {...field} 
+                    labelId="experience-label" 
+                    label="Total Experience"
+                    MenuProps={{ disableScrollLock: true }}
+                  >
+                    {EXPERIENCES.map((e) => (
+                      <MenuItem key={e} value={e}>{e}</MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <FormHelperText className={styles.helperTextSpacer}>
+                {errors.totalExperience?.message || '\u00A0'}
+              </FormHelperText>
+            </FormControl>
+          </Grid>
+        )}
 
         {/* Monthly Income / Revenue */}
         <Grid size={{ xs: 12, sm: 6 }}>
@@ -308,8 +329,20 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
             )}
           />
         </Grid>
+      </Grid>
+      </div>
 
-        {/* Existing EMI */}
+      {/* Loan Details Card */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <div className={styles.cardIcon}>
+            <Banknote size={24} />
+          </div>
+          <h3 className={styles.cardTitle}>Loan Details</h3>
+        </div>
+
+        <Grid container spacing={3}>
+          {/* Existing EMI */}
         <Grid size={{ xs: 12, sm: 6 }}>
           <Controller
             name="existingEmi"
@@ -398,6 +431,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   {...field}
                   labelId="loan-purpose-label"
                   label="Loan Purpose"
+                  MenuProps={{ disableScrollLock: true }}
                   onChange={(e) => {
                     field.onChange(e);
                     if (e.target.value !== 'Other') {
@@ -427,7 +461,12 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
               name="loanTenure"
               control={control}
               render={({ field }) => (
-                <Select {...field} labelId="loan-tenure-label" label="Loan Tenure (Months)">
+                <Select 
+                  {...field} 
+                  labelId="loan-tenure-label" 
+                  label="Loan Tenure (Months)"
+                  MenuProps={{ disableScrollLock: true }}
+                >
                   {LOAN_TENURES.map((t) => (
                     <MenuItem key={t} value={t}>{t} Months</MenuItem>
                   ))}
@@ -441,8 +480,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
         </Grid>
 
         {/* Loan Purpose Other */}
-        <Grid size={{ xs: 12 }}>
-          <Collapse in={loanPurpose === 'Other'} mountOnEnter unmountOnExit>
+        {loanPurpose === 'Other' && (
+          <Grid size={{ xs: 12 }}>
             <Controller
               name="loanPurposeOther"
               control={control}
@@ -458,9 +497,26 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 />
               )}
             />
-          </Collapse>
-        </Grid>
+          </Grid>
+        )}
       </Grid>
+      </div>
+
+      <div className={styles.consentContainer}>
+        <div className={styles.consentIcon}>
+          <ShieldCheck size={28} />
+        </div>
+        <div className={styles.consentCheckboxWrapper}>
+          <Checkbox 
+            id="consent-checkbox"
+            checked={hasConsent} 
+            onChange={(e) => setHasConsent(e.target.checked)} 
+          />
+          <label htmlFor="consent-checkbox" className={styles.consentLabel}>
+            I confirm that the above information is correct to the best of my knowledge.
+          </label>
+        </div>
+      </div>
 
       <div className={styles.actionContainer}>
         <Button 
@@ -477,6 +533,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           color="primary" 
           size="large"
           onClick={handleNext}
+          disabled={!hasConsent}
           className={styles.navButton}
         >
           Next Step &rarr;
