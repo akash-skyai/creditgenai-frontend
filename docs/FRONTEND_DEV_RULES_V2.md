@@ -185,6 +185,11 @@ Every data-driven component needs all four states, and they must look *visibly d
 
 Build one reusable `EmptyState` and `ErrorState` component in `shared/components` so every table/list in the app uses the same pattern instead of every developer inventing their own.
 
+**Error Boundaries (React-Level Crashes):**
+In addition to API errors, you must protect against React render crashes. Use the global `<ErrorBoundary>` component (located in `shared/components/ErrorBoundary`) in two places:
+1. **Globally:** Wrap the root router (`App.tsx`) to catch fatal app-wide crashes.
+2. **Locally:** Wrap the main content area of every distinct Page/Module (e.g., inside `LoanApplicationPage.tsx`) so that if a specific component crashes, only that section displays the fallback UI, while navigation and layout remain functional.
+
 ## A12. Filters Need a Reset
 
 > **Designer's note:** yes, this is standard UX practice — you'll find it in every serious product with filters (tables, search, dropdowns). Once a user has changed something, they need a fast way to undo it without manually reverting every filter one by one.

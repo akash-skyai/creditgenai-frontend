@@ -1,0 +1,68 @@
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--spacing-md);
+  background-color: var(--bg-primary, #f9fafb);
+  color: var(--text-primary, #111827);
+}
+
+.errorCard {
+  background-color: var(--bg-surface, #ffffff);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--spacing-xl, 32px);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  h2 {
+    margin-top: var(--spacing-md, 16px);
+    margin-bottom: var(--spacing-sm, 8px);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--text-secondary, #4b5563);
+    margin-bottom: var(--spacing-lg, 24px);
+    line-height: 1.5;
+  }
+}
+
+.icon {
+  color: var(--color-danger, #ef4444);
+  margin: 0 auto;
+}
+
+.errorMessage {
+  background-color: var(--bg-primary, #f3f4f6);
+  padding: var(--spacing-sm, 8px);
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.875rem;
+  color: var(--color-danger, #ef4444);
+  margin-bottom: var(--spacing-lg, 24px);
+  overflow-x: auto;
+  text-align: left;
+}
+
+.reloadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color-primary, #2563eb);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-md, 6px);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--color-primary-dark, #1d4ed8);
+  }
+}

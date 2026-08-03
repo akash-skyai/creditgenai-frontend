@@ -6,7 +6,7 @@ import type {
   UseFormSetValue,
 } from 'react-hook-form';
 
-import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
+import type { LoanApplicationFormData } from '../schemas/loan-application.schema';
 
 /**
  * ============================================================================

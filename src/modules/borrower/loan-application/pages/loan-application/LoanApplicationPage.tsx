@@ -7,6 +7,7 @@ import { SuccessScreen } from '../../components/success-screen/SuccessScreen';
 import { loanApplicationSchema } from '../../schemas/loan-application.schema';
 import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { EmploymentLoanStep } from '../../components/employment-loan-step/EmploymentLoanStep';
+import { ErrorBoundary } from '../../../../../shared/components/ErrorBoundary/ErrorBoundary';
 import styles from './LoanApplicationPage.module.scss';
 
 const DRAFT_STORAGE_KEY = 'loan_application_draft';
@@ -97,35 +98,45 @@ export function LoanApplicationPage() {
   }
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.formCard}>
-        <div className={styles.stepperWrapper}>
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+    <ErrorBoundary fallback={
+      <div className={styles.pageContainer}>
+        <div className={styles.formCard} style={{ textAlign: 'center', padding: '40px' }}>
+          <h2>Application Error</h2>
+          <p>We encountered an error loading this step. Your data is saved. Please refresh.</p>
+          <button onClick={() => window.location.reload()} style={{ marginTop: '20px' }}>Refresh</button>
         </div>
-
-        <FormProvider {...methods}>
-          <Box className={styles.stepContent}>
-            {activeStep === 0 && <PersonalInfoStep onNext={handleNext} />}
-            {activeStep === 1 && <EmploymentLoanStep onNext={handleNext} onBack={handleBack} />}
-            {activeStep === 2 && (
-              <div style={{ padding: '24px', textAlign: 'center' }}>
-                <h2>Review & Submit</h2>
-                <p>Coming in next phase...</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
-                  <button onClick={handleBack}>Back</button>
-                  <button onClick={handleFinalSubmit}>Submit Application</button>
-                </div>
-              </div>
-            )}
-          </Box>
-        </FormProvider>
       </div>
-    </div>
+    }>
+      <div className={styles.pageContainer}>
+        <div className={styles.formCard}>
+          <div className={styles.stepperWrapper}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </div>
+
+          <FormProvider {...methods}>
+            <Box className={styles.stepContent}>
+              {activeStep === 0 && <PersonalInfoStep onNext={handleNext} />}
+              {activeStep === 1 && <EmploymentLoanStep onNext={handleNext} onBack={handleBack} />}
+              {activeStep === 2 && (
+                <div style={{ padding: '24px', textAlign: 'center' }}>
+                  <h2>Review & Submit</h2>
+                  <p>Coming in next phase...</p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
+                    <button onClick={handleBack}>Back</button>
+                    <button onClick={handleFinalSubmit}>Submit Application</button>
+                  </div>
+                </div>
+              )}
+            </Box>
+          </FormProvider>
+        </div>
+      </div>
+    </ErrorBoundary>
   );
 }
