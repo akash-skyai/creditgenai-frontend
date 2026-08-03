@@ -7,6 +7,7 @@ import { SuccessScreen } from '../../components/success-screen/SuccessScreen';
 import { loanApplicationSchema } from '../../schemas/loan-application.schema';
 import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
 import { EmploymentLoanStep } from '../../components/employment-loan-step/EmploymentLoanStep';
+import { ReviewSubmitStep } from '../../components/review-submit-step/ReviewSubmitStep';
 import { ErrorBoundary } from '../../../../../shared/components/ErrorBoundary/ErrorBoundary';
 import styles from './LoanApplicationPage.module.scss';
 
@@ -83,7 +84,6 @@ export function LoanApplicationPage() {
     setActiveStep((prev) => prev - 1);
   };
 
-  // Temporary submit handler until Step 3 is built
   const handleFinalSubmit = () => {
     console.log('Final Payload:', getValues());
     // TODO: Call API via mutation
@@ -123,16 +123,7 @@ export function LoanApplicationPage() {
             <Box className={styles.stepContent}>
               {activeStep === 0 && <PersonalInfoStep onNext={handleNext} />}
               {activeStep === 1 && <EmploymentLoanStep onNext={handleNext} onBack={handleBack} />}
-              {activeStep === 2 && (
-                <div style={{ padding: '24px', textAlign: 'center' }}>
-                  <h2>Review & Submit</h2>
-                  <p>Coming in next phase...</p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
-                    <button onClick={handleBack}>Back</button>
-                    <button onClick={handleFinalSubmit}>Submit Application</button>
-                  </div>
-                </div>
-              )}
+              {activeStep === 2 && <ReviewSubmitStep onBack={handleBack} onNext={handleFinalSubmit} />}
             </Box>
           </FormProvider>
         </div>
@@ -140,3 +131,4 @@ export function LoanApplicationPage() {
     </ErrorBoundary>
   );
 }
+
