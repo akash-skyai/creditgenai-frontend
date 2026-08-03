@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
 import { describe, it, expect } from 'vitest';
 import { EmploymentSection } from './EmploymentSection';
-import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
+import type { LoanApplicationFormData } from '../../../schemas/loan-application.schema';
 
 function Wrapper() {
   const { control, formState: { errors }, setValue } = useForm<LoanApplicationFormData>({

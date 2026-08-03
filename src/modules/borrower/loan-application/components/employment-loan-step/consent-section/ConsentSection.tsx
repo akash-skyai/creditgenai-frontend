@@ -1,7 +1,7 @@
 import { Checkbox } from '@mui/material';
 import { ShieldCheck } from 'lucide-react';
-import type { ConsentSectionProps } from '../../types/employment.types';
-import styles from './EmploymentLoanStep.module.scss';
+import type { ConsentSectionProps } from '../../../types/employment.types';
+import styles from '../EmploymentLoanStep.module.scss';
 
 export function ConsentSection({ checked, onChange }: ConsentSectionProps) {
   return (

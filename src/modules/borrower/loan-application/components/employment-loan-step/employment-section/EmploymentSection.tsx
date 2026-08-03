@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { Briefcase, User, Building2 } from 'lucide-react';
 
-import type { EmploymentSectionProps } from '../../types/employment.types';
+import type { EmploymentSectionProps } from '../../../types/employment.types';
 import { 
   EMPLOYMENT_TYPES, 
   SECTORS, 
@@ -21,7 +21,7 @@ import {
   EXPERIENCE_OPTIONS, 
   LABELS, 
   PLACEHOLDERS
-} from './employment.constants';
+} from '../employment.constants';
 import { 
   isSalaried, 
   shouldShowCompanyFields, 
@@ -31,8 +31,8 @@ import {
   getEmployerLabel,
   formatNumberInWords,
   resetEmploymentFields
-} from './employment.utils';
-import styles from './EmploymentLoanStep.module.scss';
+} from '../employment.utils';
+import styles from '../EmploymentLoanStep.module.scss';
 
 const EmploymentIcons = {
   briefcase: <Briefcase size={18} />,

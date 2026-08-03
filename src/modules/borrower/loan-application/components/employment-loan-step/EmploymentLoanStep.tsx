@@ -3,9 +3,9 @@ import { useFormContext } from 'react-hook-form';
 import { Button } from '@mui/material';
 
 import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';
-import { EmploymentSection } from './EmploymentSection';
-import { LoanSection } from './LoanSection';
-import { ConsentSection } from './ConsentSection';
+import { EmploymentSection } from './employment-section/EmploymentSection';
+import { LoanSection } from './loan-section/LoanSection';
+import { ConsentSection } from './consent-section/ConsentSection';
 import styles from './EmploymentLoanStep.module.scss';
 
 interface EmploymentLoanStepProps {

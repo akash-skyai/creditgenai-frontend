@@ -14,10 +14,10 @@ import {
 } from '@mui/material';
 import { Banknote } from 'lucide-react';
 
-import type { LoanSectionProps } from '../../types/employment.types';
-import { LOAN_PURPOSES, LOAN_TENURES, LABELS, PLACEHOLDERS } from './employment.constants';
-import { formatNumberInWords, shouldShowLoanPurposeOther } from './employment.utils';
-import styles from './EmploymentLoanStep.module.scss';
+import type { LoanSectionProps } from '../../../types/employment.types';
+import { LOAN_PURPOSES, LOAN_TENURES, LABELS, PLACEHOLDERS } from '../employment.constants';
+import { formatNumberInWords, shouldShowLoanPurposeOther } from '../employment.utils';
+import styles from '../EmploymentLoanStep.module.scss';
 
 export const LoanSection = memo(function LoanSection({ control, errors, setValue }: LoanSectionProps) {
   const loanAmount = useWatch({ control, name: 'loanAmount' });
