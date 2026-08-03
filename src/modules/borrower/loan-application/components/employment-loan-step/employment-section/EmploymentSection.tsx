@@ -106,6 +106,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                 render={({ field }) => (
                   <Select 
                     {...field} 
+                    value={field.value ?? ''}
                     labelId="sector-label" 
                     label={LABELS.SECTOR}
                     MenuProps={{ disableScrollLock: true }}
@@ -139,6 +140,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                 render={({ field }) => (
                   <Select 
                     {...field} 
+                    value={field.value ?? ''}
                     labelId="business-type-label" 
                     label={LABELS.BUSINESS_TYPE}
                     MenuProps={{ disableScrollLock: true }}
@@ -185,6 +187,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                   render={({ field }) => (
                     <Select 
                       {...field} 
+                      value={field.value ?? ''}
                       labelId="company-experience-label" 
                       label={LABELS.COMPANY_EXPERIENCE}
                       MenuProps={{ disableScrollLock: true }}
@@ -235,6 +238,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                 render={({ field }) => (
                   <Select 
                     {...field} 
+                    value={field.value ?? ''}
                     labelId="experience-label" 
                     label={LABELS.TOTAL_EXPERIENCE}
                     MenuProps={{ disableScrollLock: true }}
@@ -261,6 +265,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
               <div>
                 <NumericFormat
                   {...field}
+                  value={field.value ?? ''}
                   getInputRef={ref}
                   customInput={TextField}
                   fullWidth

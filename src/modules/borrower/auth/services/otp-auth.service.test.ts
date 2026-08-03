@@ -2,11 +2,17 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { otpAuthService } from './otp-auth.service';
 import { apiClient } from '../../../../services/api-client';
 
+import { environment } from '../../../../config/environment';
+
+environment.useMock = false;
+
 vi.mock('../../../../services/api-client', () => ({
   apiClient: {
     post: vi.fn(),
   },
 }));
+
+import { endpoints } from '../../../../services/endpoints';
 
 describe('otpAuthService', () => {
   beforeEach(() => {
@@ -20,7 +26,7 @@ describe('otpAuthService', () => {
 
       const result = await otpAuthService.sendOtp({ mobileNumber: '9999999999' });
 
-      expect(apiClient.post).toHaveBeenCalledWith('/auth/send-otp', { mobileNumber: '9999999999' });
+      expect(apiClient.post).toHaveBeenCalledWith(endpoints.SEND_OTP, { mobileNumber: '9999999999' });
       expect(result).toEqual(mockResponse.data);
     });
 
@@ -38,7 +44,7 @@ describe('otpAuthService', () => {
 
       const result = await otpAuthService.verifyOtp({ mobileNumber: '9999999999', otpCode: '123456' });
 
-      expect(apiClient.post).toHaveBeenCalledWith('/auth/verify-otp', { mobileNumber: '9999999999', otpCode: '123456' });
+      expect(apiClient.post).toHaveBeenCalledWith(endpoints.VERIFY_OTP, { mobileNumber: '9999999999', otpCode: '123456' });
       expect(result).toEqual(mockResponse.data);
     });
   });

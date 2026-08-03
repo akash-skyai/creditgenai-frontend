@@ -41,6 +41,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
             render={({ field: { onChange, ref, ...field } }) => (
               <NumericFormat
                 {...field}
+                value={field.value ?? ''}
                 getInputRef={ref}
                 customInput={TextField}
                 fullWidth
@@ -74,6 +75,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
               render={({ field }) => (
                 <Select 
                   {...field} 
+                  value={field.value ?? ''}
                   labelId="loan-tenure-label" 
                   label={LABELS.LOAN_TENURE}
                   MenuProps={{ disableScrollLock: true }}
@@ -99,6 +101,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
               <div>
                 <NumericFormat
                   {...field}
+                  value={field.value ?? ''}
                   getInputRef={ref}
                   customInput={TextField}
                   fullWidth
@@ -148,6 +151,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
               render={({ field }) => (
                 <Select
                   {...field}
+                  value={field.value ?? ''}
                   labelId="loan-purpose-label"
                   label={LABELS.LOAN_PURPOSE}
                   MenuProps={{ disableScrollLock: true }}
