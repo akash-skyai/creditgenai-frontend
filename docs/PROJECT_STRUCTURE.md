@@ -224,7 +224,7 @@ src/
 5. **Services = the only place that calls `api-client`.** Also contains the `if (environment.useMock) return mockData` guard.
 6. **Schemas = Zod only.** One schema file per form. Shared between `useForm<>` generic and the service's input type.
 7. **Types = module-level shared definitions.** Single-use types stay in the file that uses them.
-8. **Sub-components = colocate in parent.** If a component is broken down into smaller sub-components that are exclusively used by the parent, those sub-components (and their tests) should be colocated inside the parent component's folder. Do not create top-level component folders for tightly-coupled sub-components.
+8. **Sub-components = colocate in parent.** If a component is broken down into smaller sub-components that are exclusively used by the parent, those sub-components (and their tests) should be colocated inside the parent component's folder. Do not create top-level component folders for tightly-coupled sub-components. **SCSS Rule:** Sub-components intentionally inherit their parent's `.module.scss` unless they are complex enough to warrant their own. This is an explicit exception to the "one SCSS per component" rule.
 9. **Local Constants & Utils = colocate in parent.** Component-specific constants and utility functions should be colocated inside the component's folder (e.g., `employment.utils.ts` inside `employment-loan-step/`). There is no module-level `utils/` or `constants/` folder.
 
 ---
@@ -345,6 +345,8 @@ Test what the user sees (rendered output, interactions, validation messages, emp
 | Services | `kebab-case` or `camelCase` + `.service` suffix | `otp-auth.service.ts` |
 | Schemas | `kebab-case` or `camelCase` + `.schema` suffix | `phone.schema.ts` |
 | Types | `kebab-case` or `camelCase` + `.types` suffix | `auth.types.ts` |
+| Utils | `camelCase` or `kebab-case` + `.utils` suffix | `employment.utils.ts` |
+| Constants | `camelCase` or `kebab-case` + `.constants` suffix | `employment.constants.ts` |
 | SCSS modules | Match Component name + `.module.scss` | `PhoneForm.module.scss` |
 | Mock data | Match Service name + `.mock.json` | `otp-auth.mock.json` |
 

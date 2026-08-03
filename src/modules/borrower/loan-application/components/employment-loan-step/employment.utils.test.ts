@@ -17,7 +17,7 @@ import {
   shouldShowBusinessFields
 } from './employment.utils';
 
-vi.mock('@/shared/utils/numberToWords', () => ({
+vi.mock('./numberToWords', () => ({
   numberToWords: vi.fn((val) => `Words for ${val}`)
 }));
 

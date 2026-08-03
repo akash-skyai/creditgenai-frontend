@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useSendOtp } from './useSendOtp';
@@ -35,13 +35,15 @@ describe('useSendOtp', () => {
 
     const { result } = renderHook(() => useSendOtp(), { wrapper });
 
-    result.current.mutate({ phone: '9999999999' });
+    act(() => {
+      result.current.mutate({ mobileNumber: '9876543210' });
+    });
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(otpAuthService.sendOtp).toHaveBeenCalledWith({ phone: '9999999999' });
+    expect(otpAuthService.sendOtp).toHaveBeenCalledWith({ mobileNumber: '9876543210' });
     expect(result.current.data).toEqual(mockResponse);
   });
 });

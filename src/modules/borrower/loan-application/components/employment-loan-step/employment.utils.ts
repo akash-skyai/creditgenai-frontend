@@ -1,6 +1,6 @@
 // employment.utils.ts
 
-import { numberToWords } from '@/shared/utils/numberToWords';
+import { numberToWords } from './numberToWords';
 
 /**
  * ============================================================================
