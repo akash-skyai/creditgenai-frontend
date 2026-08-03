@@ -224,6 +224,8 @@ src/
 5. **Services = the only place that calls `api-client`.** Also contains the `if (environment.useMock) return mockData` guard.
 6. **Schemas = Zod only.** One schema file per form. Shared between `useForm<>` generic and the service's input type.
 7. **Types = module-level shared definitions.** Single-use types stay in the file that uses them.
+8. **Sub-components = colocate in parent.** If a component is broken down into smaller sub-components that are exclusively used by the parent, those sub-components (and their tests) should be colocated inside the parent component's folder. Do not create top-level component folders for tightly-coupled sub-components.
+9. **Local Constants & Utils = colocate in parent.** Component-specific constants and utility functions should be colocated inside the component's folder (e.g., `employment.utils.ts` inside `employment-loan-step/`). There is no module-level `utils/` or `constants/` folder.
 
 ---
 

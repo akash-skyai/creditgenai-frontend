@@ -31,7 +31,7 @@ import {
   getEmployerLabel,
   formatNumberInWords,
   resetEmploymentFields
-} from '../../utils/employment.utils';
+} from './employment.utils';
 import styles from './EmploymentLoanStep.module.scss';
 
 const EmploymentIcons = {

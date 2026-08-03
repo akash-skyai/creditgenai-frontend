@@ -14,11 +14,8 @@ describe('usePinCode', () => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
-    );
+    const wrapper = ({ children }: { children: React.ReactNode }) => 
+      React.createElement(QueryClientProvider, { client: queryClient }, children);
 
     vi.mocked(postalService.fetchPostalData).mockResolvedValueOnce({ city: 'Pune', state: 'Maharashtra' });
 
