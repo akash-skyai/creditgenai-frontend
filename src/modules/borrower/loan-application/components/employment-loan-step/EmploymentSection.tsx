@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { Briefcase, User, Building2 } from 'lucide-react';
 
-import type { EmploymentSectionProps } from './employment.types';
+import type { EmploymentSectionProps } from '../../types/employment.types';
 import { 
   EMPLOYMENT_TYPES, 
   SECTORS, 
@@ -31,7 +31,7 @@ import {
   getEmployerLabel,
   formatNumberInWords,
   resetEmploymentFields
-} from './employment.utils';
+} from '../../utils/employment.utils';
 import styles from './EmploymentLoanStep.module.scss';
 
 const EmploymentIcons = {
@@ -40,10 +40,9 @@ const EmploymentIcons = {
 };
 
 export const EmploymentSection = memo(function EmploymentSection({ control, errors, setValue }: EmploymentSectionProps) {
-  const [employmentType, sector, monthlyIncome] = useWatch({ 
-    control, 
-    name: ['employmentType', 'sector', 'monthlyIncome'] 
-  });
+  const employmentType = useWatch({ control, name: 'employmentType' });
+  const sector = useWatch({ control, name: 'sector' });
+  const monthlyIncome = useWatch({ control, name: 'monthlyIncome' });
 
   return (
     <div className={styles.card}>
@@ -258,10 +257,11 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
           <Controller
             name="monthlyIncome"
             control={control}
-            render={({ field }) => (
+            render={({ field: { onChange, ref, ...field } }) => (
               <div>
                 <NumericFormat
                   {...field}
+                  getInputRef={ref}
                   customInput={TextField}
                   fullWidth
                   label={getMonthlyIncomeLabel(employmentType)}
@@ -270,7 +270,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                   helperText={errors.monthlyIncome?.message ?? (monthlyIncome ? formatNumberInWords(monthlyIncome as number) : ' ')}
                   thousandSeparator=","
                   onValueChange={(values) => {
-                    field.onChange(values.floatValue);
+                    onChange(values.floatValue);
                   }}
                   slotProps={{
                     formHelperText: { className: styles.helperTextSpacer },
