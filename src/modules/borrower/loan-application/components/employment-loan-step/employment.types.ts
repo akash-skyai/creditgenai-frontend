@@ -4,7 +4,6 @@ import type {
   Control,
   FieldErrors,
   UseFormSetValue,
-  UseFormTrigger,
 } from 'react-hook-form';
 
 import type { LoanApplicationFormData } from '../../schemas/loan-application.schema';

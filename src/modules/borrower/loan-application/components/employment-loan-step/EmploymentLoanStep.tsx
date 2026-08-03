@@ -302,10 +302,11 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           <Controller
             name="monthlyIncome"
             control={control}
-            render={({ field }) => (
+            render={({ field: { onChange, ref, ...field } }) => (
               <div>
                 <NumericFormat
                   {...field}
+                  getInputRef={ref}
                   customInput={TextField}
                   fullWidth
                   label={employmentType === 'salaried' ? 'Take-Home Salary' : 'Average Monthly Income'}
@@ -315,7 +316,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
-                    field.onChange(values.floatValue);
+                    onChange(values.floatValue);
                   }}
                   slotProps={{
                     formHelperText: { className: styles.helperTextSpacer },
@@ -346,9 +347,10 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           <Controller
             name="existingEmi"
             control={control}
-            render={({ field }) => (
+            render={({ field: { onChange, ref, ...field } }) => (
               <NumericFormat
                 {...field}
+                getInputRef={ref}
                 customInput={TextField}
                 fullWidth
                 label="Existing Total EMI (if any)"
@@ -358,7 +360,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 thousandSeparator=","
                 valueIsNumericString
                 onValueChange={(values) => {
-                  field.onChange(values.floatValue || 0);
+                  onChange(values.floatValue || 0);
                 }}
                 slotProps={{
                   formHelperText: { className: styles.helperTextSpacer },
@@ -376,10 +378,11 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           <Controller
             name="loanAmount"
             control={control}
-            render={({ field }) => (
+            render={({ field: { onChange, ref, ...field } }) => (
               <div>
                 <NumericFormat
                   {...field}
+                  getInputRef={ref}
                   customInput={TextField}
                   fullWidth
                   label="Required Loan Amount"
@@ -389,7 +392,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                   thousandSeparator=","
                   valueIsNumericString
                   onValueChange={(values) => {
-                    field.onChange(values.floatValue);
+                    onChange(values.floatValue);
                   }}
                   slotProps={{
                     formHelperText: { className: styles.helperTextSpacer },
@@ -402,7 +405,7 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
                 <div className={styles.sliderContainer}>
                   <Slider
                     value={typeof field.value === 'number' ? field.value : 10000}
-                    onChange={(_, newValue) => field.onChange(newValue as number)}
+                    onChange={(_, newValue) => onChange(newValue as number)}
                     min={10000}
                     max={5000000}
                     step={10000}
