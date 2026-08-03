@@ -73,9 +73,8 @@ export function EmploymentLoanStep({ onNext, onBack }: EmploymentLoanStepProps) 
           size="large"
           onClick={handleNext}
           disabled={!hasConsent}
-          className={styles.navButton}
         >
-          Next Step &rarr;
+          Continue
         </Button>
       </div>
     </div>

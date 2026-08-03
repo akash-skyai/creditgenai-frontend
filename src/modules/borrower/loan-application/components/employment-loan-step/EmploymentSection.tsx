@@ -55,7 +55,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
 
       <Grid container spacing={3}>
         {/* Employment Type */}
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <Controller
             name="employmentType"
             control={control}
@@ -97,7 +97,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
 
         {/* Dynamic adjacent field (Sector or Business Type) */}
         {isSalaried(employmentType) && (
-          <Grid size={{ xs: 12 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth error={!!errors.sector}>
               <InputLabel id="sector-label">{LABELS.SECTOR}</InputLabel>
               <Controller
@@ -205,7 +205,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
 
         {/* Salaried - Government Sector Fields */}
         {shouldShowGovernmentFields(employmentType, sector) && (
-          <Grid size={{ xs: 12 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Controller
               name="organizationEmployer"
               control={control}
@@ -253,7 +253,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
         )}
 
         {/* Monthly Income / Revenue */}
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <Controller
             name="monthlyIncome"
             control={control}
@@ -269,6 +269,7 @@ export const EmploymentSection = memo(function EmploymentSection({ control, erro
                   error={!!errors.monthlyIncome}
                   helperText={errors.monthlyIncome?.message ?? (monthlyIncome ? formatNumberInWords(monthlyIncome as number) : ' ')}
                   thousandSeparator=","
+                  thousandsGroupStyle="lakh"
                   onValueChange={(values) => {
                     onChange(values.floatValue);
                   }}

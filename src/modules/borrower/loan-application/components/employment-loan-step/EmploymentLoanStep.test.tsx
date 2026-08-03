@@ -62,7 +62,7 @@ describe('EmploymentLoanStep', () => {
     expect(screen.getByText('Employment Type')).toBeInTheDocument();
     expect(screen.getByLabelText(/Monthly Take-home Income/i)).toBeInTheDocument();
     expect(screen.getAllByLabelText(/Loan Amount/i)[0]).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Next Step/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Back/i })).toBeInTheDocument();
   });
 });

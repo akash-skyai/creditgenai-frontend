@@ -49,6 +49,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
                 error={!!errors.existingEmi}
                 helperText={errors.existingEmi?.message || '\u00A0'}
                 thousandSeparator=","
+                thousandsGroupStyle="lakh"
                 onValueChange={(values) => {
                   onChange(values.floatValue || 0);
                 }}
@@ -61,6 +62,32 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
               />
             )}
           />
+        </Grid>
+
+        {/* Loan Tenure */}
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <FormControl fullWidth error={!!errors.loanTenure}>
+            <InputLabel id="loan-tenure-label">{LABELS.LOAN_TENURE}</InputLabel>
+            <Controller
+              name="loanTenure"
+              control={control}
+              render={({ field }) => (
+                <Select 
+                  {...field} 
+                  labelId="loan-tenure-label" 
+                  label={LABELS.LOAN_TENURE}
+                  MenuProps={{ disableScrollLock: true }}
+                >
+                  {LOAN_TENURES.map((t) => (
+                    <MenuItem key={t.value} value={t.value}>{t.label}</MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+            <FormHelperText className={styles.helperTextSpacer}>
+              {errors.loanTenure?.message || '\u00A0'}
+            </FormHelperText>
+          </FormControl>
         </Grid>
 
         {/* Required Loan Amount - Slider + Input */}
@@ -80,6 +107,7 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
                   error={!!errors.loanAmount}
                   helperText={errors.loanAmount?.message || (loanAmount ? formatNumberInWords(loanAmount as number) : '\u00A0')}
                   thousandSeparator=","
+                  thousandsGroupStyle="lakh"
                   onValueChange={(values) => {
                     onChange(values.floatValue);
                   }}
@@ -144,35 +172,9 @@ export const LoanSection = memo(function LoanSection({ control, errors, setValue
           </FormControl>
         </Grid>
         
-        {/* Loan Tenure */}
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <FormControl fullWidth error={!!errors.loanTenure}>
-            <InputLabel id="loan-tenure-label">{LABELS.LOAN_TENURE}</InputLabel>
-            <Controller
-              name="loanTenure"
-              control={control}
-              render={({ field }) => (
-                <Select 
-                  {...field} 
-                  labelId="loan-tenure-label" 
-                  label={LABELS.LOAN_TENURE}
-                  MenuProps={{ disableScrollLock: true }}
-                >
-                  {LOAN_TENURES.map((t) => (
-                    <MenuItem key={t.value} value={t.value}>{t.label}</MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-            <FormHelperText className={styles.helperTextSpacer}>
-              {errors.loanTenure?.message || '\u00A0'}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-
         {/* Loan Purpose Other */}
         {shouldShowLoanPurposeOther(loanPurpose) && (
-          <Grid size={{ xs: 12 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Controller
               name="loanPurposeOther"
               control={control}
