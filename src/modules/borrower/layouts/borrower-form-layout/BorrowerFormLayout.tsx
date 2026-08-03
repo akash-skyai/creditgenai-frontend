@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import styles from './BorrowerFormLayout.module.scss';
-import { BorrowerNavbar } from '../components/borrower-navbar/BorrowerNavbar';
+import { BorrowerNavbar } from '../../components/borrower-navbar/BorrowerNavbar';
 
 interface BorrowerFormLayoutProps {
   children: ReactNode;

@@ -20,7 +20,7 @@ export function LoanApplicationPage() {
 
   // Setup React Hook Form
   const methods = useForm<LoanApplicationFormData>({
-    resolver: zodResolver(loanApplicationSchema) as any,
+    resolver: zodResolver(loanApplicationSchema) as unknown as import('react-hook-form').Resolver<LoanApplicationFormData>,
     mode: 'onSubmit', // Validate on submit, re-validate on change
     defaultValues: {
       firstName: '',

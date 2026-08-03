@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   const methods = useForm<LoanApplicationFormData>({
-    resolver: zodResolver(loanApplicationSchema) as any,
+    resolver: zodResolver(loanApplicationSchema) as unknown as import('react-hook-form').Resolver<LoanApplicationFormData>,
     defaultValues: {
       firstName: '',
       middleName: '',

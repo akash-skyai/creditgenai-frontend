@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import styles from './BorrowerAuthLayout.module.scss';
 import { ShieldCheck, Zap, Lock, FileCheck } from 'lucide-react';
-import { BorrowerNavbar } from '../components/borrower-navbar/BorrowerNavbar';
+import { BorrowerNavbar } from '../../components/borrower-navbar/BorrowerNavbar';
 
 interface BorrowerAuthLayoutProps {
   children: ReactNode;
